@@ -1,0 +1,63 @@
+# depslib dependency file v1.0
+1570286879 source:c:\users\papot\desktop\nova pasta\hotel telas\main.cpp
+	<iostream>
+	<conio.h>
+	<locale.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"funcionario.cpp"
+
+1570280833 source:c:\users\papot\desktop\nova pasta\hotel telas\funcionario.cpp
+
+1570280833 c:\users\papot\desktop\nova pasta\hotel telas\funcionario.cpp
+
+1570896944 source:c:\users\papot\desktop\hotel telas\funcionario.cpp
+	<iostream>
+	<mysql.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1570896024 source:c:\users\papot\desktop\hotel telas\main.cpp
+	<iostream>
+	<conio.h>
+	<locale.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"funcionario.cpp"
+	<mysql.h>
+
+1570897402 c:\users\papot\desktop\hotel telas\funcionario.cpp
+	<iostream>
+	<mysql.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1554683456 c:\program files\mariadb\mariadb connector c 64-bit\include\mysql.h
+	<stdarg.h>
+	<sys/types.h>
+	"mariadb_com.h"
+	"mariadb_version.h"
+	"ma_list.h"
+	"mariadb_ctype.h"
+	"mariadb_stmt.h"
+
+1554683456 c:\program files\mariadb\mariadb connector c 64-bit\include\mariadb_com.h
+
+1554683540 c:\program files\mariadb\mariadb connector c 64-bit\include\mariadb_version.h
+	<custom_conf.h>
+
+1554683456 c:\program files\mariadb\mariadb connector c 64-bit\include\ma_list.h
+
+1554683456 c:\program files\mariadb\mariadb connector c 64-bit\include\mariadb_ctype.h
+	<ctype.h>
+
+1554683456 c:\program files\mariadb\mariadb connector c 64-bit\include\mariadb_stmt.h
+
