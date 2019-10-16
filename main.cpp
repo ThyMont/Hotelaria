@@ -105,11 +105,11 @@ void verificarEstruturaBD() {
 
 }
 
-void gotoxy(int coluna, int linha)
-{
- COORD point;
- point.X = coluna; point.Y = linha;
- SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
+void gotoxy(int coluna, int linha) {
+    COORD point;
+    point.X = coluna;
+    point.Y = linha;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 }
 
 void textcolor(int color) {
@@ -119,70 +119,70 @@ void textcolor(int color) {
 // incluir a biblioteca windows.h
 // este método geralmente se encontra na biblioteca conio.h
 // caso não esteja na biblioteca, use este metodo
-int __BACKGROUND = 0;
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),color + (__BACKGROUND << 4));
+    int __BACKGROUND = 0;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),color + (__BACKGROUND << 4));
 }
 
-void desenharRetangulo (int base, int altura){
-	//Desenhar um retângulo
-	printf("%c",201);
-	for (int i = 2; i<base; i++){
-		printf("%c",205);
-	}
-	printf("%c\n",187);
+void desenharRetangulo (int base, int altura) {
+    //Desenhar um retângulo
+    printf("%c",201);
+    for (int i = 2; i<base; i++) {
+        printf("%c",205);
+    }
+    printf("%c\n",187);
 
-	for (int j = 2; j < altura; j++){
+    for (int j = 2; j < altura; j++) {
 
-		printf("%c",186);
-		for (int i = 2; i<base; i++){
-			printf("%c",32);
-		}
-	printf("%c\n",186);
+        printf("%c",186);
+        for (int i = 2; i<base; i++) {
+            printf("%c",32);
+        }
+        printf("%c\n",186);
 
-	}
+    }
 
-	printf("%c",200);
-	for (int i = 2; i<base; i++){
-		printf("%c",205);
-	}
-	printf("%c\n",188);
+    printf("%c",200);
+    for (int i = 2; i<base; i++) {
+        printf("%c",205);
+    }
+    printf("%c\n",188);
 }
 
-void desenharRetangulo2 (int base, int altura, int x, int y){
-	//Desenhar um retângulo
-	gotoxy(x, y++);
-	printf("%c",201);
-	for (int i = 2; i<base; i++){
-		printf("%c",205);
-	}
-	printf("%c\n",187);
+void desenharRetangulo2 (int base, int altura, int x, int y) {
+    //Desenhar um retângulo
+    gotoxy(x, y++);
+    printf("%c",201);
+    for (int i = 2; i<base; i++) {
+        printf("%c",205);
+    }
+    printf("%c\n",187);
 
 
-	for (int j = 2; j < altura; j++){
-		gotoxy(x, y++);
-		printf("%c",186);
-		for (int i = 2; i<base; i++){
-			printf("%c",32);
-		}
-	printf("%c\n",186);
+    for (int j = 2; j < altura; j++) {
+        gotoxy(x, y++);
+        printf("%c",186);
+        for (int i = 2; i<base; i++) {
+            printf("%c",32);
+        }
+        printf("%c\n",186);
 
-	}
+    }
 
-	gotoxy(x, y++);
-	printf("%c",200);
-	for (int i = 2; i<base; i++){
-		printf("%c",205);
-	}
-	printf("%c\n",188);
+    gotoxy(x, y++);
+    printf("%c",200);
+    for (int i = 2; i<base; i++) {
+        printf("%c",205);
+    }
+    printf("%c\n",188);
 }
 
-void margemTela(){
+void margemTela() {
     textcolor(5);
     system("CLS");
     desenharRetangulo(119,29);
 }
 
-void telaLogin(){
+void telaLogin() {
     string login, senha;
     margemTela();
     textcolor(3);
@@ -235,32 +235,71 @@ void telaLogin(){
 
 }
 
-int menuPrincipal(){
-    system("CLS");
-    margemTela();
-    gotoxy(4,0);
-    textcolor(3);
-    funcionario f1;
-    cout << "Usuário:  " << nomeUsuarioAtivo;
-    int x = 20,y = 5;
-    gotoxy(x,y++);
-    textcolor(6);
-    cout << "      MENU PRINCIPAL";
-    gotoxy(x,y++);
-    cout << "1 . ";
-    return 0;
+void menuPrincipal() {
+
 }
 
-int main()
-{
+int main() {
     conectar();
     verificarEstruturaBD();
     setlocale(LC_ALL, "pt_BR_utf8");
+    do {//Loop de tela de Login
+        telaLogin();
+        Sleep(500);
+        int opMenu=8;
+        do { // Loop de menu principal
+            system("CLS");
+            margemTela();
+            gotoxy(4,0);
+            textcolor(3);
+            cout << "Usuário:  " << nomeUsuarioAtivo;
+            int x = 40,y = 3;
+            gotoxy(x,y++);
+            textcolor(6);
+            cout << "- - - -    MENU PRINCIPAL    - - - -";
+            y++;
+            y++;
+            gotoxy(x,y++);
+            y++;
+            textcolor(2);
+            cout << "    1 - HOSPEDES";
+            gotoxy(x,y++);
+            y++;
+            cout << "    2 - SUITES";
+            gotoxy(x,y++);
+            y++;
+            cout << "    3 - FUNCIONARIOS";
+            gotoxy(x,y++);
+            y++;
+            cout << "    4 - SERVIÇOS";
+            gotoxy(x,y++);
+            y++;
+            cout << "    5 - HOSPEDAGEM";
+            gotoxy(x,y++);
+            y++;
+            cout << "    6 - RESERVA";
+            gotoxy(x,y++);
+            y++;
+            cout << "    7 - SAIR";
+            gotoxy(x,y++);
+            y++;
+            cout << "    8 - FECHAR PROGRAMA";
+            y++;
+            gotoxy(x,++y);
+            textcolor(1);
+            cout << "    Digite a opção desejada: ";
+            if (opMenu<1||opMenu>8) {
+                gotoxy(45,26);
+                textcolor(4);
+                cout << "Opção Inválida. Tente Novamente!";
+            }
+            textcolor(1);
+            gotoxy(x+29,y);
 
-    telaLogin();
-    Sleep(500);
-   menuPrincipal();
-
+            cin >> opMenu;
+        } while (opMenu<1||opMenu>8);
+    } while (!loginCHK);
     gotoxy(0,29);
+
     return 0;
 }
