@@ -9,32 +9,21 @@ using namespace std;
 
 class funcionario {
 public:
-    bool fazerLogin (MYSQL *servidor, string login, string senha){
-            mysql_select_db(servidor,"hoteldb")==0;
-        if (true) {
-            string query = "SELECT id FROM funcionario WHERE nome='"+login+"' AND senha = '"+ senha+"';";
-            mysql_query(servidor,query.c_str());
-            if (mysql_errno(servidor)==0) {
-               MYSQL_RES* res = mysql_use_result(servidor);
-                MYSQL_ROW row;
-                while( ( row = mysql_fetch_row(res)) != NULL ) {
-                    string c_senha = row[1];
-                    if (c_senha == senha){
-                         cout << "TESTE A";
-                         return true;
+    bool fazerLogin (MYSQL *servidor, string login, string senha) {
+        string query = "SELECT id FROM funcionario WHERE nome='"+login+"' AND senha = '"+ senha+"';";
+        mysql_query(servidor,query.c_str());
+        MYSQL_RES* res = mysql_use_result(servidor);
+        MYSQL_ROW row;
+        while( ( row = mysql_fetch_row(res)) != NULL ) {
+            int a = (int)row[0]-48;
+            if (a>=1 ) {
+                cout << "TESTE A";
+                return true;
 
-                    } else {
-                         cout << "TESTE B";
-                        return false;
-
-                    }
-                }
+            } else {
+                cout << "TESTE B";
+                return false;
             }
-            getchar();
-        } else {
-             cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            return false;
-
         }
     }
 
