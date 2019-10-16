@@ -14,16 +14,17 @@ public:
         mysql_query(servidor,query.c_str());
         MYSQL_RES* res = mysql_use_result(servidor);
         MYSQL_ROW row;
+        int i = 0;
         while( ( row = mysql_fetch_row(res)) != NULL ) {
-            int a = (int)row[0]-48;
-            if (a>=1 ) {
-                cout << "TESTE A";
-                return true;
+            i++;
+        }
+        if (i>=1) {
+            cout << "TESTE A";
+            return true;
 
-            } else {
-                cout << "TESTE B";
-                return false;
-            }
+        } else {
+            cout << "TESTE B";
+            return false;
         }
     }
 

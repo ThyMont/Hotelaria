@@ -61,3 +61,38 @@
 
 1554683456 c:\program files\mariadb\mariadb connector c 64-bit\include\mariadb_stmt.h
 
+1571256787 source:c:\users\papot\documents\git thymont\hotelaria\funcionario.cpp
+	<iostream>
+	<mysql.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1571256584 source:c:\users\papot\documents\git thymont\hotelaria\main.cpp
+	<iostream>
+	<conio.h>
+	<locale.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"funcionario.cpp"
+	<mysql.h>
+
+1571256787 c:\users\papot\documents\git thymont\hotelaria\funcionario.cpp
+	<iostream>
+	<mysql.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1571079616 source:c:\users\papot\documents\git thymont\hotelaria\hospede.cpp
+	<iostream>
+	<mysql.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

@@ -83,7 +83,7 @@ void verificarEstruturaBD() {
     mysql_query(servidor, "ALTER TABLE hospedagem ADD FOREIGN KEY (id_funcionario) REFERENCES funcionario(id);");
 
     if (mysql_errno(servidor)==0) {
-        cout<< "Tabela FUNCIONARIO Criada com Sucesso!\n";
+        cout<< "Tabela HOSPEDAGEM Criada com Sucesso!\n";
     } else {
         cout<<"\nErro na Criação da tabela no BD "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
         exit(1);
@@ -94,7 +94,7 @@ void verificarEstruturaBD() {
     mysql_query(servidor, "ALTER TABLE servicos ADD FOREIGN KEY (id_funcionario) REFERENCES funcionario(id);");
     mysql_query(servidor, "ALTER TABLE servicos ADD FOREIGN KEY (id_hospedagem) REFERENCES hospedagem(id);");
     if (mysql_errno(servidor)==0) {
-        cout<< "Tabela FUNCIONARIO Criada com Sucesso!\n";
+        cout<< "Tabela SERVIÇO Criada com Sucesso!\n";
     } else {
         cout<<"\nErro na Criação da tabela no BD "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
         exit(1);
@@ -197,21 +197,19 @@ void telaLogin(){
 
     //Login
     bool logincheck;
-     funcionario f;
+    funcionario f;
     do {
         textcolor(1);
         gotoxy(47, 12);
         cin >> login;
         gotoxy(47, 14);
         cin >> senha;
-
-        logincheck = NULL;
         logincheck = f.fazerLogin(servidor, login, senha);
         gotoxy(47, 16);
-            textcolor(2);
-            printf("       Aguarde...        ");
-            Sleep(500);
-        if( !logincheck){
+        textcolor(2);
+        printf("       Aguarde...        ");
+        Sleep(500);
+        if( !logincheck) {
             textcolor(4);
             gotoxy(47, 12);
             printf("                    ");
@@ -221,7 +219,11 @@ void telaLogin(){
             printf("LOGIN OU SENHA INCORRETOS");
             gotoxy(47, 17);
             printf("    TENTE NOVAMENTE!");
-            cout << login << "  " << senha;
+        } else {
+            gotoxy(47, 16);
+            printf("  LOGIN E SENHA CORRETOS ");
+            gotoxy(47, 17);
+            printf("   SUCESSO!           ");
         }
     } while (!logincheck);
     gotoxy(0,29);
