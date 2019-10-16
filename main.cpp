@@ -241,8 +241,13 @@ int menuPrincipal(){
     gotoxy(4,0);
     textcolor(3);
     funcionario f1;
-    cout << "TESTANDO      " << nomeUsuarioAtivo;
-
+    cout << "Usuário:  " << nomeUsuarioAtivo;
+    int x = 20,y = 5;
+    gotoxy(x,y++);
+    textcolor(6);
+    cout << "      MENU PRINCIPAL";
+    gotoxy(x,y++);
+    cout << "1 . ";
     return 0;
 }
 
