@@ -19,12 +19,21 @@ public:
             i++;
         }
         if (i>=1) {
-            cout << "TESTE A";
             return true;
 
         } else {
-            cout << "TESTE B";
             return false;
+        }
+    }
+
+    string salvarIDUsuario (MYSQL *servidor, string login, string senha) {
+        //Registra ID do usuário após o Login
+        string query = "SELECT id FROM funcionario WHERE nome='"+login+"' AND senha = '"+ senha+"';";
+        mysql_query(servidor,query.c_str());
+        MYSQL_RES* res = mysql_use_result(servidor);
+        MYSQL_ROW row;
+        while( ( row = mysql_fetch_row(res)) != NULL ) {
+            return row[0];
         }
     }
 

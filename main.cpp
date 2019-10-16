@@ -223,7 +223,8 @@ void telaLogin(){
             gotoxy(47, 16);
             printf("  LOGIN E SENHA CORRETOS ");
             gotoxy(47, 17);
-            printf("   SUCESSO!           ");
+            printf("        AGUARDE...       ");
+            cout << "   ID: " << f.salvarIDUsuario(servidor, login, senha);
         }
     } while (!logincheck);
     gotoxy(0,29);
@@ -236,6 +237,8 @@ int main()
     verificarEstruturaBD();
     setlocale(LC_ALL, "pt_BR_utf8");
     telaLogin();
+    Sleep(500);
+
 
     gotoxy(0,29);
     return 0;
