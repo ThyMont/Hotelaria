@@ -32,10 +32,25 @@ public:
         mysql_query(servidor,query.c_str());
         MYSQL_RES* res = mysql_use_result(servidor);
         MYSQL_ROW row;
+        string id;
         while( ( row = mysql_fetch_row(res)) != NULL ) {
-            return row[0];
+            id = row[0];
         }
+        return id;
     }
+
+    string getNomeUsuario (MYSQL *servidor, string id) {
+        string query = "SELECT nome FROM funcionario WHERE id='"+id+"';";
+        mysql_query(servidor,query.c_str());
+        MYSQL_RES* res = mysql_use_result(servidor);
+        MYSQL_ROW row;
+        string nome;
+        while( ( row = mysql_fetch_row(res)) != NULL ) {
+            nome = row[0];
+        }
+        return nome;
+    }
+
 
     void cabecalho() {
         cout<< " --- HOTEL DO FIM DO MUNDO ---\n";

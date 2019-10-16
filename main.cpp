@@ -11,6 +11,8 @@
 using namespace std;
 
 MYSQL  *servidor;
+bool loginCHK;
+string usuarioAtivoID, nomeUsuarioAtivo;
 
 void conectar() {
 
@@ -224,11 +226,24 @@ void telaLogin(){
             printf("  LOGIN E SENHA CORRETOS ");
             gotoxy(47, 17);
             printf("        AGUARDE...       ");
-            cout << "   ID: " << f.salvarIDUsuario(servidor, login, senha);
+
+            usuarioAtivoID = f.salvarIDUsuario(servidor, login, senha);
+            nomeUsuarioAtivo = login;
         }
     } while (!logincheck);
     gotoxy(0,29);
 
+}
+
+int menuPrincipal(){
+    system("CLS");
+    margemTela();
+    gotoxy(4,0);
+    textcolor(3);
+    funcionario f1;
+    cout << "TESTANDO      " << nomeUsuarioAtivo;
+
+    return 0;
 }
 
 int main()
@@ -236,9 +251,10 @@ int main()
     conectar();
     verificarEstruturaBD();
     setlocale(LC_ALL, "pt_BR_utf8");
+
     telaLogin();
     Sleep(500);
-
+   menuPrincipal();
 
     gotoxy(0,29);
     return 0;
