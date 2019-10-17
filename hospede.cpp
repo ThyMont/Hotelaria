@@ -381,7 +381,7 @@ public:
                 cout  << "nacionalidade: " <<row[8] <<endl;
                 Sleep(500);
             }
-            do {
+
                 if(i>0) {
                     gotoxy(x,++y);
                     textcolor(13);
@@ -409,6 +409,7 @@ public:
                     gotoxy(x,++y);
                     cout << "Digite 9 para CANCELAR ";
                 }
+                do {
                 cin>> op;
                 if (i>0) {
                     string editado;
@@ -618,7 +619,7 @@ public:
                     }
                     }
                 }
-            } while(op!=9);
+            } while(op<1||op>9);
         }
     }
 

@@ -253,10 +253,10 @@ int main() {
     verificarEstruturaBD();
     setlocale(LC_ALL, "pt_BR_utf8");
     do {//Loop de tela de Login
-        /*if(!loginCHK) {
+        if(!loginCHK) {
             telaLogin();
             Sleep(500);
-        }*/
+        }
         int opMenu;
         bool erro  = false;
         do { // Loop de menu principal
