@@ -374,6 +374,37 @@ int main() {
                     textcolor(1);
                     gotoxy(x+29,y);
                     cin >>opMenuHospede;
+
+                    switch (opMenuHospede){
+                        case 1:{
+                            break;
+                        }
+                        case 2:{
+                            break;
+                        }
+                        case 3:{
+                            break;
+                        }
+                        case 4:{
+                            break;
+                        }
+                        case 5:{
+                            break;
+                        }
+                        case 6:{
+                            break;
+                        }
+                        case 7:{
+                            break;
+                        }
+                        case 8:{
+                            break;
+                        }
+                        default:{
+                            break;
+                        }
+                    }
+
                 } while (opMenuHospede < 1 || opMenuHospede >8);
 
                     opMenu = 0; //Voltar ao loop do menu principal
