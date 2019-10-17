@@ -283,7 +283,7 @@ int main() {
             cout << "    3 - FUNCIONARIOS";
             gotoxy(x,y++);
             y++;
-            cout << "    4 - SERVIÇOS";
+            cout << "    4 - SERVICOS";
             gotoxy(x,y++);
             y++;
             cout << "    5 - HOSPEDAGEM";
@@ -330,7 +330,7 @@ int main() {
                     margemTela();
                     gotoxy(4,0);
                     textcolor(3);
-                    cout << "Usuário:  " << nomeUsuarioAtivo;
+                    cout << "Usuario:  " << nomeUsuarioAtivo;
                     int x = 40,y = 3;
                     gotoxy(x,y++);
                     textcolor(15);
@@ -383,7 +383,10 @@ int main() {
                             opMenuHospede = 0;
                             break;
                         }
-                        case 2:{
+                        case 2:{ //LOCALIZAR HOSPEDE POR NOME
+                            hospede h;
+                            h.localizarPorNome(servidor);
+                            opMenuHospede = 0;
                             break;
                         }
                         case 3:{
