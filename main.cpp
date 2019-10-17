@@ -401,7 +401,10 @@ int main() {
                             opMenuHospede = 0;
                             break;
                         }
-                        case 5:{
+                        case 5:{ //Listar Hóspedes por UF
+                            hospede h;
+                            h.listarporUF(servidor);
+                            opMenuHospede = 0;
                             break;
                         }
                         case 6:{

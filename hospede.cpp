@@ -341,7 +341,6 @@ public:
 
     void editarHospede(MYSQL *servidor) {
         int op;
-
         system("CLS");
         margemTela();
         gotoxy(4,0);
@@ -585,6 +584,9 @@ public:
                         break;
                     }
                     default: {
+                        gotoxy(x,y+3);
+                        textcolor(3);
+                        cout << "Opção inválida! Tente novamente ";
                         for(int i = 1; i<5; i++) {
                             Sleep(500);
                             cout << ".";
@@ -593,6 +595,28 @@ public:
                     }
 
                     }
+                } else {
+                    switch (op) {
+                    case 9: {
+                        gotoxy(x,y+3);
+                        textcolor(3);
+                        cout << "Edicao cancelada! Voltando, aguarde ";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                    }
+                    default: {
+                        gotoxy(x,y+3);
+                        textcolor(3);
+                        cout << "Opção inválida! Tente novamente ";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    }
                 }
             } while(op!=9);
         }
@@ -600,62 +624,156 @@ public:
 
 
     void excluirHospede(MYSQL *servidor) {
-        system("CLS");
-        mysql_select_db(servidor,"hoteldb");
-        string id;
-        if (mysql_errno(servidor)==0) {
+        int op;
+        do {
+            system("CLS");
+            margemTela();
+            gotoxy(4,0);
+            textcolor(3);
+            gotoxy(10,3);
+            textcolor(15);
+            cout << "- - - -     EXCLUIR HOSPEDE     - - - -";
+            gotoxy(10,5);
+            textcolor(12);
+            cout << "INFORME A ID DO HOSPEDE: ";
+            textcolor(11);
+            gotoxy(10,7);
+            string id;
+            cin>>id;
 
-            cout << "---  EXCLUIR Hóspede  ---\n";
-            cout << "\n\nDigite a ID do hóspede a ser excluído: ";
-            cin >> id;
-            string query = "SELECT id, nome,cpf from hospede WHERE id LIKE '%"+id+"%';";
+            string query = "SELECT id, nome, cpf, celular, telefone, uf, data_nascimento, cidade, nacionalidade from hospede WHERE id LIKE '%"+id+"%';";
             mysql_query(servidor,query.c_str());
-
+            gotoxy(10,9);
+            textcolor(6);
             cout << "Aguarde";
-            for(int i = 1; i<10; i++) {
+            for(int i = 1; i<5; i++) {
                 Sleep(500);
                 cout << ".";
             }
 
             if (mysql_errno(servidor)==0) {
-                cout << "\nPronto!\n";
-                Sleep(1);
+                int x = 10, y = 10;
                 MYSQL_RES* res = mysql_use_result(servidor);
                 MYSQL_ROW row;
                 int i = 0;
+                textcolor(15);
                 while( ( row = mysql_fetch_row(res)) != NULL ) {
-                    cout <<"\n\t"<< ++i<<". ID: "<<row[0] << "Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
+                    gotoxy(x,y++);
+                    cout << ++i<< ". ID: " << row[0] << " Nome: " << row[1] <<" CPF: "<< row[2] << " Celular: "<< row[3]<< endl;
+                    gotoxy(x+4,y++);
+                    cout  << "Telefone: " << row[4] << "UF: " << row[5] << "DN: " << row[6] << "Cidade: " << row[7]<< endl;
+                    gotoxy(x+4,y++);
+                    cout  << "nacionalidade: " <<row[8] <<endl;
                     Sleep(500);
                 }
-                cout << "Foram encontrados " << i << " resultado(s)";
-                getchar();
+                if(i>0) {
+                    gotoxy(x,++y);
+                    textcolor(13);
+                    cout << "SELECIONE A OPÇÃO DESEJADA: ";
+                    gotoxy(x,++y);
+                    cout << "1. EXCLUIR HOSPEDE: ";
+                    gotoxy(x,++y);
+                    cout << "2. PROCURAR NOVAMENTE: ";
+                    gotoxy(x,++y);
+                    cout << "3. CANCELAR: ";
+
+                } else {
+                    gotoxy(x,++y);
+                    textcolor(13);
+                    cout << "SELECIONE A OPÇÃO DESEJADA: ";
+                    gotoxy(x,++y);
+                    cout << "2. PROCURAR NOVAMENTE: ";
+                    gotoxy(x,++y);
+                    cout << "3. CANCELAR: ";
+                }
+                gotoxy(x,++y);
+                cin>> op;
+
+                if (i>0) {
+                    switch (op) {
+                    case 1: {
+                        if (mysql_errno(servidor)==0) {
+                            string query = "DELETE FROM hospede WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Hospede excluido com sucesso. Aguarde para continuar.";
+                                for(int i = 1; i<5; i++) {
+                                    Sleep(500);
+                                    cout << ".";
+                                }
+                            }
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 2: {
+                        gotoxy(x,++y);
+                        cout << "Reiniciando a pesquisa. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    case 3: {
+                        gotoxy(x,++y);
+                        cout << "Cancelando a exclusão. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    default: {
+                        gotoxy(x,++y);
+                        cout << "Opção inválida. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    }
+                } else {
+                    switch (op) {
+                    case 2: {
+                        gotoxy(x,++y);
+                        cout << "Reiniciando a pesquisa. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    case 3: {
+                        gotoxy(x,++y);
+                        cout << "Reiniciando a pesquisa. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    default: {
+                        gotoxy(x,++y);
+                        cout << "Opção inválida. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    }
+                }
             }
-
-        } else {
-            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            exit(1);
-        }
-        string nome;
-        cout<< "\nExcluir usuário com a id:" <<id<<"\n";
-        cout<< "Confirma a exclusão?\n";
-
-        cout<< "Digite o novo nome do hóspede:";
-        cin>>nome;
-
-        mysql_select_db(servidor,"hoteldb");
-        if (mysql_errno(servidor)==0) {
-            string query = "UPDATE hospede SET nome='"+(nome)+"' WHERE id = "+(id)+";";
-            mysql_query(servidor,query.c_str());
-
-            if (mysql_errno(servidor)==0) {
-                cout << "Hóspede editado com sucesso.\nPressione a tecla ENTER para continuar.";
-            }
-            getchar();
-        } else {
-            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            exit(1);
-        }
+        } while (op!=3&&op!=1);
     }
+
 
     void contarhospedes(MYSQL *servidor) {
         system("CLS");
