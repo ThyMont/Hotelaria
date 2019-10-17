@@ -777,43 +777,58 @@ public:
 
     void contarhospedes(MYSQL *servidor) {
         system("CLS");
-        cout << "---  Contagem total de hóspedes  ---\n";
+        margemTela();
+        gotoxy(4,0);
+        textcolor(3);
+        gotoxy(40,5);
+        textcolor(15);
+        cout << "- - - -     LISTAR HOSPEDES POR UF    - - - -";
+
         mysql_select_db(servidor,"hoteldb");
         if (mysql_errno(servidor)==0) {
             string query = "SELECT COUNT(*) FROM hospede;";
             mysql_query(servidor,query.c_str());
-
+            gotoxy(40,10);
+            textcolor(6);
             cout << "Contando";
-            for(int i = 1; i<10; i++) {
+            for(int i = 1; i<7; i++) {
                 Sleep(500);
                 cout << ".";
             }
-        }
+            int x = 40, y = 15;
+            if (mysql_errno(servidor)==0) {
 
-        if (mysql_errno(servidor)==0) {
-            cout << "\nPronto!\n";
-            Sleep(1);
-            MYSQL_RES* res = mysql_use_result(servidor);
-            MYSQL_ROW row;
-            while( ( row = mysql_fetch_row(res)) != NULL ) {
-                cout <<" Total de hóspedes cadastrados: "<<row[0] <<  endl;
+                Sleep(1);
+                MYSQL_RES* res = mysql_use_result(servidor);
+                MYSQL_ROW row;
+                textcolor(15);
+                while( ( row = mysql_fetch_row(res)) != NULL ) {
+                    gotoxy(x,y++);
+                    cout <<" Total de hóspedes cadastrados: "<<row[0] <<  endl;
+                    Sleep(500);
+                }
+                y++;
+
+                gotoxy(x,y+2);
+                textcolor(5);
+                cout << "Pressione ENTER para continuar";
+            } else {
+                gotoxy(x,y+2);
+                cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                exit(1);
             }
-
-            cout<< "Pressione ENTER para continuar";
-            getchar();
         }
     }
-
     void listarporUF(MYSQL *servidor) {
         system("CLS");
-            margemTela();
-            gotoxy(4,0);
-            textcolor(3);
-            gotoxy(40,3);
-            textcolor(15);
-            cout << "- - - -     LISTAR HOSPEDES POR UF    - - - -";
+        margemTela();
+        gotoxy(4,0);
+        textcolor(3);
+        gotoxy(40,3);
+        textcolor(15);
+        cout << "- - - -     LISTAR HOSPEDES POR UF    - - - -";
 
-            mysql_select_db(servidor,"hoteldb");
+        mysql_select_db(servidor,"hoteldb");
         if (mysql_errno(servidor)==0) {
             string query = "SELECT id, nome, uf from hospede ORDER BY uf;";
             mysql_query(servidor,query.c_str());

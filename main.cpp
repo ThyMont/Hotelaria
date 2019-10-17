@@ -408,6 +408,10 @@ int main() {
                             break;
                         }
                         case 6:{
+                            hospede h;
+                            h.contarhospedes(servidor);
+                            getchar();
+                            opMenuHospede = 0;
                             break;
                         }
                         case 7:{//Listar Hóspedes por UF
