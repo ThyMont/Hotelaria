@@ -376,62 +376,75 @@ int main() {
                     gotoxy(x+29,y);
                     cin >>opMenuHospede;
 
-                    switch (opMenuHospede){
-                        case 1:{ //Cadastrar Hóspede
-                            hospede h;
-                            h.cadastrarHospede(servidor);
-                            opMenuHospede = 0;
-                            break;
+                    switch (opMenuHospede) {
+                    case 1: { //Cadastrar Hóspede
+                        hospede h;
+                        h.cadastrarHospede(servidor);
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 2: { //LOCALIZAR HOSPEDE POR NOME
+                        hospede h;
+                        h.localizarPorNome(servidor);
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 3: { //LOCALIZAR HOSPEDE POR CPF
+                        hospede h;
+                        h.localizarPorCPF(servidor);
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 4: { //EDITAR INFORMACOES DE HOSPEDE
+                        hospede h;
+                        h.editarHospede(servidor);
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 5: { //DELETAR hospede
+                        hospede h;
+                        h.excluirHospede(servidor);
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 6: {
+                        hospede h;
+                        h.contarhospedes(servidor);
+                        getchar();
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 7: { //Listar Hóspedes por UF
+                        hospede h;
+                        h.listarporUF(servidor);
+                        getchar();
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 8: {
+                        gotoxy(45,26);
+                        textcolor(14);
+                        cout << "Voltando ao menu principal";
+                        for (int i = 0; i<5; i++) {
+                            Sleep(500);
+                            cout <<".";
                         }
-                        case 2:{ //LOCALIZAR HOSPEDE POR NOME
-                            hospede h;
-                            h.localizarPorNome(servidor);
-                            opMenuHospede = 0;
-                            break;
-                        }
-                        case 3:{ //LOCALIZAR HOSPEDE POR CPF
-                            hospede h;
-                            h.localizarPorCPF(servidor);
-                            opMenuHospede = 0;
-                            break;
-                        }
-                        case 4:{ //EDITAR INFORMACOES DE HOSPEDE
-                            hospede h;
-                            h.editarHospede(servidor);
-                            opMenuHospede = 0;
-                            break;
-                        }
-                        case 5:{ //DELETAR hospede
-                            hospede h;
-                            h.excluirHospede(servidor);
-                            opMenuHospede = 0;
-                            break;
-                        }
-                        case 6:{
-                            hospede h;
-                            h.contarhospedes(servidor);
-                            getchar();
-                            opMenuHospede = 0;
-                            break;
-                        }
-                        case 7:{//Listar Hóspedes por UF
-                            hospede h;
-                            h.listarporUF(servidor);
-                            getchar();
-                            opMenuHospede = 0;
-                            break;
-                        }
-                        case 8:{
-                            break;
-                        }
-                        default:{
-                            break;
-                        }
+                        gotoxy(0,29);
+                        break;
+                    }
+                    default: {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                        erro = true;
+                        break;
+                        break;
+                    }
                     }
 
                 } while (opMenuHospede < 1 || opMenuHospede >8);
 
-                    opMenu = 0; //Voltar ao loop do menu principal
+                opMenu = 0; //Voltar ao loop do menu principal
                 break;
             }
             case 2: { //SUITES

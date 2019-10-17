@@ -804,7 +804,7 @@ public:
                 textcolor(15);
                 while( ( row = mysql_fetch_row(res)) != NULL ) {
                     gotoxy(x,y++);
-                    cout <<" Total de hóspedes cadastrados: "<<row[0] <<  endl;
+                    cout <<"Total de hospedes cadastrados: "<<row[0] <<  endl;
                     Sleep(500);
                 }
                 y++;
@@ -817,6 +817,7 @@ public:
                 cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
                 exit(1);
             }
+            getchar();
         }
     }
     void listarporUF(MYSQL *servidor) {
