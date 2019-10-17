@@ -6,6 +6,7 @@
 #include <string.h>
 #include <windows.h>
 #include "funcionario.cpp"
+#include "hospede.cpp"
 #include <mysql.h>
 
 using namespace std;
@@ -263,7 +264,7 @@ int main() {
             margemTela();
             gotoxy(4,0);
             textcolor(3);
-            cout << "Usuário:  " << nomeUsuarioAtivo;
+            cout << "Usuario:  " << nomeUsuarioAtivo;
             int x = 40,y = 3;
             gotoxy(x,y++);
             textcolor(6);
@@ -376,7 +377,10 @@ int main() {
                     cin >>opMenuHospede;
 
                     switch (opMenuHospede){
-                        case 1:{
+                        case 1:{ //Cadastrar Hóspede
+                            hospede h;
+                            h.cadastrarHospede(servidor);
+                            opMenuHospede = 0;
                             break;
                         }
                         case 2:{
@@ -498,7 +502,8 @@ int main() {
                     Sleep(500);
                     cout <<".";
                 }
-                break;
+                gotoxy(0,29);
+                exit(1);
                 break;
             }
             default: {
