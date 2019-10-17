@@ -11,7 +11,7 @@
 using namespace std;
 
 MYSQL  *servidor;
-bool loginCHK;
+bool loginCHK = false;
 string usuarioAtivoID, nomeUsuarioAtivo;
 
 void conectar() {
@@ -226,7 +226,7 @@ void telaLogin() {
             printf("  LOGIN E SENHA CORRETOS ");
             gotoxy(47, 17);
             printf("        AGUARDE...       ");
-
+            loginCHK = true;
             usuarioAtivoID = f.salvarIDUsuario(servidor, login, senha);
             nomeUsuarioAtivo = login;
         }
@@ -244,9 +244,12 @@ int main() {
     verificarEstruturaBD();
     setlocale(LC_ALL, "pt_BR_utf8");
     do {//Loop de tela de Login
-        telaLogin();
-        Sleep(500);
-        int opMenu=8;
+        if(!loginCHK) {
+            telaLogin();
+            Sleep(500);
+        }
+        int opMenu;
+        bool erro  = false;
         do { // Loop de menu principal
             system("CLS");
             margemTela();
@@ -280,7 +283,7 @@ int main() {
             cout << "    6 - RESERVA";
             gotoxy(x,y++);
             y++;
-            cout << "    7 - SAIR";
+            cout << "    7 - LOGOFF";
             gotoxy(x,y++);
             y++;
             cout << "    8 - FECHAR PROGRAMA";
@@ -288,18 +291,85 @@ int main() {
             gotoxy(x,++y);
             textcolor(1);
             cout << "    Digite a opção desejada: ";
-            if (opMenu<1||opMenu>8) {
+            if (erro) {
                 gotoxy(45,26);
                 textcolor(4);
                 cout << "Opção Inválida. Tente Novamente!";
             }
+            erro = false;
             textcolor(1);
             gotoxy(x+29,y);
+            cin >>opMenu;
 
-            cin >> opMenu;
+            switch (opMenu) {
+                case 1: {
+                    cout << "Teste 1 - ";
+
+                    opMenu = 0;
+                    break;
+                }
+                case 2: {
+                    cout << "Teste 2";
+                    opMenu = 0;
+                    break;
+                }
+                case 3: {
+                    cout << "Teste 3";
+
+                    opMenu = 0;
+                    break;
+                }
+                case 4: {
+                    cout << "Teste 4";
+
+                    opMenu = 0;
+                    break;
+                }
+                case 5: {
+                    cout << "Teste 5";
+
+                    opMenu = 0;
+                    break;
+                }
+                case 6: {
+                    cout << "Teste 6";
+
+                    opMenu = 0;
+                    break;
+                }
+                case 7: {
+                    gotoxy(45,26);
+                    textcolor(4);
+                    cout << "Fazendo Logoff";
+                    for (int i = 0;i<5;i++){
+                        Sleep(500);
+                        cout <<".";
+                    }
+                    loginCHK = false;
+                    break;
+                }
+                case 8: {
+                    gotoxy(45,26);
+                    textcolor(4);
+                    cout << "Saindo do programa";
+                    for (int i = 0;i<5;i++){
+                        Sleep(500);
+                        cout <<".";
+                    }
+                    break;
+                    break;
+                }
+                default: {
+                    cout << "Teste 9";
+                    erro = true;
+                    break;
+                }
+            }
         } while (opMenu<1||opMenu>8);
+
     } while (!loginCHK);
     gotoxy(0,29);
+    cout << "Saindo...";
 
     return 0;
 }
