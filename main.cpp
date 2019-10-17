@@ -401,16 +401,20 @@ int main() {
                             opMenuHospede = 0;
                             break;
                         }
-                        case 5:{ //Listar Hóspedes por UF
+                        case 5:{ //DELETAR hospede
                             hospede h;
-                            h.listarporUF(servidor);
+                            h.excluirHospede(servidor);
                             opMenuHospede = 0;
                             break;
                         }
                         case 6:{
                             break;
                         }
-                        case 7:{
+                        case 7:{//Listar Hóspedes por UF
+                            hospede h;
+                            h.listarporUF(servidor);
+                            getchar();
+                            opMenuHospede = 0;
                             break;
                         }
                         case 8:{

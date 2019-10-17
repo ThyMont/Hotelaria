@@ -805,40 +805,54 @@ public:
     }
 
     void listarporUF(MYSQL *servidor) {
-        mysql_select_db(servidor,"hoteldb");
-        if (mysql_errno(servidor)==0) {
-            system("CLS");
-            cout << "---  Listando hóspedes por UF  ---\n";
+        system("CLS");
+            margemTela();
+            gotoxy(4,0);
+            textcolor(3);
+            gotoxy(40,3);
+            textcolor(15);
+            cout << "- - - -     LISTAR HOSPEDES POR UF    - - - -";
 
+            mysql_select_db(servidor,"hoteldb");
+        if (mysql_errno(servidor)==0) {
             string query = "SELECT id, nome, uf from hospede ORDER BY uf;";
             mysql_query(servidor,query.c_str());
-
-            cout << "\nListando";
-            for(int i = 1; i<10; i++) {
+            gotoxy(40,6);
+            textcolor(6);
+            cout << "Pesquisando";
+            for(int i = 1; i<5; i++) {
                 Sleep(500);
                 cout << ".";
             }
 
             if (mysql_errno(servidor)==0) {
-                cout << "\nPesquisa realizada com sucesso!\n";
+                int x = 35, y = 8;
+                gotoxy(40,7);
+                textcolor(14);
+                cout << "Pesquisa realizada com sucesso!";
                 Sleep(1);
                 MYSQL_RES* res = mysql_use_result(servidor);
                 MYSQL_ROW row;
                 int i = 0;
+                textcolor(15);
                 while( ( row = mysql_fetch_row(res)) != NULL ) {
-                    cout <<"\n\t"<< ++i<<". ID: "<<row[0] << " Nome: "<< row[1] <<"\t UF: "<< row[2] << endl;
+                    gotoxy(x,y++);
+                    cout << ++i<<". ID: "<<row[0] << " Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
                     Sleep(500);
-                    getchar();
                 }
+                y++;
+                gotoxy(x,++y);
+                textcolor(13);
                 cout << "Foram encontrados " << i << " resultado(s)";
-                getchar();
+
+                gotoxy(x,y+2);
+                textcolor(5);
+                cout << "Pressione ENTER para continuar";
             }
         } else {
             cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
             exit(1);
         }
-
-        cout<<"\nPresssione ENTER para continuar";
         getchar();
     }
 
