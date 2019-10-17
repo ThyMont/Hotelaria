@@ -209,14 +209,22 @@ void telaLogin() {
         logincheck = f.fazerLogin(servidor, login, senha);
         gotoxy(47, 16);
         textcolor(2);
-        printf("       Aguarde...        ");
-        Sleep(500);
+        printf("       Aguarde           ");
+        gotoxy(47, 17);
+        printf("                         ");
+        gotoxy(47, 17);
+        printf("        ");
+        for (int i = 0; i<5; i++) {
+            Sleep(500);
+            cout <<".";
+        }
+
         if( !logincheck) {
             textcolor(4);
             gotoxy(47, 12);
-            printf("                    ");
+            printf("                        ");
             gotoxy(47, 14);
-            printf("                    ");
+            printf("                        ");
             gotoxy(47, 16);
             printf("LOGIN OU SENHA INCORRETOS");
             gotoxy(47, 17);
@@ -225,7 +233,11 @@ void telaLogin() {
             gotoxy(47, 16);
             printf("  LOGIN E SENHA CORRETOS ");
             gotoxy(47, 17);
-            printf("        AGUARDE...       ");
+            printf("        AGUARDE");
+            for (int i = 0; i<3; i++) {
+                Sleep(500);
+                cout <<".";
+            }
             loginCHK = true;
             usuarioAtivoID = f.salvarIDUsuario(servidor, login, senha);
             nomeUsuarioAtivo = login;
@@ -302,68 +314,68 @@ int main() {
             cin >>opMenu;
 
             switch (opMenu) {
-                case 1: {
-                    cout << "Teste 1 - ";
+            case 1: {
+                cout << "Teste 1 - ";
 
-                    opMenu = 0;
-                    break;
-                }
-                case 2: {
-                    cout << "Teste 2";
-                    opMenu = 0;
-                    break;
-                }
-                case 3: {
-                    cout << "Teste 3";
+                opMenu = 0;
+                break;
+            }
+            case 2: {
+                cout << "Teste 2";
+                opMenu = 0;
+                break;
+            }
+            case 3: {
+                cout << "Teste 3";
 
-                    opMenu = 0;
-                    break;
-                }
-                case 4: {
-                    cout << "Teste 4";
+                opMenu = 0;
+                break;
+            }
+            case 4: {
+                cout << "Teste 4";
 
-                    opMenu = 0;
-                    break;
-                }
-                case 5: {
-                    cout << "Teste 5";
+                opMenu = 0;
+                break;
+            }
+            case 5: {
+                cout << "Teste 5";
 
-                    opMenu = 0;
-                    break;
-                }
-                case 6: {
-                    cout << "Teste 6";
+                opMenu = 0;
+                break;
+            }
+            case 6: {
+                cout << "Teste 6";
 
-                    opMenu = 0;
-                    break;
+                opMenu = 0;
+                break;
+            }
+            case 7: {
+                gotoxy(45,26);
+                textcolor(4);
+                cout << "Fazendo Logoff";
+                for (int i = 0; i<5; i++) {
+                    Sleep(500);
+                    cout <<".";
                 }
-                case 7: {
-                    gotoxy(45,26);
-                    textcolor(4);
-                    cout << "Fazendo Logoff";
-                    for (int i = 0;i<5;i++){
-                        Sleep(500);
-                        cout <<".";
-                    }
-                    loginCHK = false;
-                    break;
+                loginCHK = false;
+                break;
+            }
+            case 8: {
+                gotoxy(45,26);
+                textcolor(4);
+                cout << "Saindo do programa";
+                for (int i = 0; i<5; i++) {
+                    Sleep(500);
+                    cout <<".";
                 }
-                case 8: {
-                    gotoxy(45,26);
-                    textcolor(4);
-                    cout << "Saindo do programa";
-                    for (int i = 0;i<5;i++){
-                        Sleep(500);
-                        cout <<".";
-                    }
-                    break;
-                    break;
-                }
-                default: {
-                    cout << "Teste 9";
-                    erro = true;
-                    break;
-                }
+                break;
+                break;
+            }
+            default: {
+                cout << "Teste 9";
+                erro = true;
+                break;
+            }
             }
         } while (opMenu<1||opMenu>8);
 
