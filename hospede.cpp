@@ -210,9 +210,10 @@ public:
     void procurarPorCPFBD(MYSQL *servidor, string cpf) {
         mysql_select_db(servidor,"hoteldb");
         if (mysql_errno(servidor)==0) {
-            string query = "SELECT id, nome, cpf  from hospede WHERE cpf LIKE '%"+cpf+"%';";
+            string query = "SELECT id, nome, cpf from hospede WHERE cpf LIKE \'%%"+cpf+"%%\';";
             mysql_query(servidor,query.c_str());
-
+            gotoxy(40,11);
+            textcolor(6);
             cout << "Pesquisando";
             for(int i = 1; i<5; i++) {
                 Sleep(500);
@@ -220,24 +221,56 @@ public:
             }
 
             if (mysql_errno(servidor)==0) {
-                cout << "\nPesquisa realizada com sucesso!\n";
+                int x = 35, y = 14;
+                gotoxy(40,12);
+                textcolor(14);
+                cout << "Pesquisa realizada com sucesso!";
                 Sleep(1);
                 MYSQL_RES* res = mysql_use_result(servidor);
                 MYSQL_ROW row;
                 int i = 0;
+                textcolor(15);
                 while( ( row = mysql_fetch_row(res)) != NULL ) {
-                    cout <<"\n\t"<< ++i<<". ID: "<<row[0] << " Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
+                    gotoxy(x,y++);
+                    cout << ++i<<". ID: "<<row[0] << " Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
                     Sleep(500);
                 }
+                y++;
+                gotoxy(x,++y);
+                textcolor(13);
                 cout << "Foram encontrados " << i << " resultado(s)";
-                getchar();
+
+                gotoxy(x,y+2);
+            textcolor(5);
+            cout << "Digite 1 para RETORNAR ou 2 para PESQUISAR NOVAMENTE ";
             }
         } else {
             cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
             exit(1);
         }
+    }
 
-        cout<<"\nPresssione ENTER para continuar";
+    void localizarPorCPF(MYSQL *servidor) {
+        int op;
+        do {
+            system("CLS");
+            margemTela();
+            gotoxy(4,0);
+            textcolor(3);
+            gotoxy(35,3);
+            textcolor(15);
+            cout << "- - - -    LOCALIZAR HOSPEDE POR CPF   - - - -";
+            gotoxy(35,8);
+            textcolor(12);
+            cout << "DIGITE O CPF DESEJADO: ";
+            textcolor(11);
+            gotoxy(35,10);
+            string cpf;
+            cin>>cpf;
+            procurarPorCPFBD(servidor, cpf);
+
+            cin>> op;
+        } while(op!=1);
     }
 
     void procurarPorNomeBD(MYSQL *servidor, string nome) {
@@ -254,7 +287,7 @@ public:
             }
 
             if (mysql_errno(servidor)==0) {
-                int x = 40, y = 14;
+                int x = 35, y = 14;
                 gotoxy(40,12);
                 textcolor(14);
                 cout << "Pesquisa realizada com sucesso!";
@@ -265,7 +298,7 @@ public:
                 textcolor(15);
                 while( ( row = mysql_fetch_row(res)) != NULL ) {
                     gotoxy(x,y++);
-                    cout <<"\n\t"<< ++i<<". ID: "<<row[0] << " Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
+                    cout << ++i<<". ID: "<<row[0] << " Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
                     Sleep(500);
                 }
                 y++;
@@ -284,54 +317,25 @@ public:
     }
 
     void localizarPorNome(MYSQL *servidor) {
-
         int op;
         do {
             system("CLS");
             margemTela();
             gotoxy(4,0);
             textcolor(3);
-            gotoxy(40,3);
+            gotoxy(35,3);
             textcolor(15);
             cout << "- - - -    LOCALIZAR HOSPEDE POR NOME   - - - -";
-            gotoxy(40,8);
+            gotoxy(35,8);
             textcolor(12);
             cout << "DIGITE O NOME DESEJADO: ";
             textcolor(11);
-            gotoxy(40,10);
+            gotoxy(35,10);
             string nome;
             cin>>nome;
             procurarPorNomeBD(servidor, nome);
 
             cin>> op;
-
-            /*cout<< "---  PROCURAR HÓSPEDE  ---\n";
-            cout<< "\nDigite 1 para pesquisar por NOME\nDigite 2 para pesquisar por CPF\nDigite 3 para cancelar";
-            cin>>op;
-            switch(op) {
-            case 1: {
-                string nome;
-                cout<< "\nDigite o nome desejado:\n";
-                cin>>nome;
-                procurarPorNomeBD(servidor, nome);
-                break;
-
-            }
-            case 2: {
-                string cpf;
-                cout<< "\nDigite o cpf desejado:\n";
-                cin>>cpf;
-                procurarPorNomeBD(servidor, cpf);
-                break;
-
-            }
-            case 3: {
-                cout<<"Operação Cancelada";
-            }
-            default: {
-                cout<<"Opção inválida. Tente novamente";
-            }
-            }*/
         } while(op!=1);
     }
 

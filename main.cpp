@@ -390,6 +390,10 @@ int main() {
                             break;
                         }
                         case 3:{
+                            hospede h;
+                            h.localizarPorCPF(servidor);
+                            opMenuHospede = 0;
+                            break;
                             break;
                         }
                         case 4:{
