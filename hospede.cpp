@@ -103,8 +103,8 @@ public:
                 gotoxy(40,21);
                 cout << "Retornando ao menu de HOSPEDE";
                 for(int i = 0; i<5; i++) {
-                        cout<<".";
-                        Sleep(500);
+                    cout<<".";
+                    Sleep(500);
                 }
             }
             getchar();
@@ -241,8 +241,8 @@ public:
                 cout << "Foram encontrados " << i << " resultado(s)";
 
                 gotoxy(x,y+2);
-            textcolor(5);
-            cout << "Digite 1 para RETORNAR ou 2 para PESQUISAR NOVAMENTE ";
+                textcolor(5);
+                cout << "Digite 1 para RETORNAR ou 2 para PESQUISAR NOVAMENTE ";
             }
         } else {
             cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
@@ -307,8 +307,8 @@ public:
                 cout << "Foram encontrados " << i << " resultado(s)";
 
                 gotoxy(x,y+2);
-            textcolor(5);
-            cout << "Digite 1 para RETORNAR ou 2 para PESQUISAR NOVAMENTE ";
+                textcolor(5);
+                cout << "Digite 1 para RETORNAR ou 2 para PESQUISAR NOVAMENTE ";
             }
         } else {
             cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
@@ -340,62 +340,262 @@ public:
     }
 
     void editarHospede(MYSQL *servidor) {
+        int op;
+
         system("CLS");
-        mysql_select_db(servidor,"hoteldb");
+        margemTela();
+        gotoxy(4,0);
+        textcolor(3);
+        gotoxy(10,3);
+        textcolor(15);
+        cout << "- - - -     EDITAR HOSPEDE     - - - -";
+        gotoxy(10,5);
+        textcolor(12);
+        cout << "INFORME A ID DO HOSPEDE: ";
+        textcolor(11);
+        gotoxy(10,7);
         string id;
-        if (mysql_errno(servidor)==0) {
-            cout << "\n---  EDITAR Hóspede  ---\n";
-            cout << "\n\nDigite a ID do hóspede a ser editado: ";
-            cin >> id;
-            string query = "SELECT id, nome,cpf from hospede WHERE id LIKE '%"+id+"%';";
-            mysql_query(servidor,query.c_str());
+        cin>>id;
 
-            cout << "Aguarde";
-            for(int i = 1; i<10; i++) {
+        string query = "SELECT id, nome, cpf, celular, telefone, uf, data_nascimento, cidade, nacionalidade from hospede WHERE id LIKE '%"+id+"%';";
+        mysql_query(servidor,query.c_str());
+        gotoxy(10,9);
+        textcolor(6);
+        cout << "Aguarde";
+        for(int i = 1; i<5; i++) {
+            Sleep(500);
+            cout << ".";
+        }
+
+        if (mysql_errno(servidor)==0) {
+            int x = 10, y = 10;
+            MYSQL_RES* res = mysql_use_result(servidor);
+            MYSQL_ROW row;
+            int i = 0;
+            textcolor(15);
+            while( ( row = mysql_fetch_row(res)) != NULL ) {
+                gotoxy(x,y++);
+                cout << ++i<< ". ID: " << row[0] << " Nome: " << row[1] <<" CPF: "<< row[2] << " Celular: "<< row[3]<< endl;
+                gotoxy(x+4,y++);
+                cout  << "Telefone: " << row[4] << "UF: " << row[5] << "DN: " << row[6] << "Cidade: " << row[7]<< endl;
+                gotoxy(x+4,y++);
+                cout  << "nacionalidade: " <<row[8] <<endl;
                 Sleep(500);
-                cout << ".";
             }
-
-            if (mysql_errno(servidor)==0) {
-                cout << "\nPronto!\n";
-                Sleep(1);
-                MYSQL_RES* res = mysql_use_result(servidor);
-                MYSQL_ROW row;
-                int i = 0;
-                while( ( row = mysql_fetch_row(res)) != NULL ) {
-                    cout <<"\n\t"<< ++i<<". ID: "<<row[0] << "Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
-                    Sleep(500);
+            do {
+                if(i>0) {
+                    gotoxy(x,++y);
+                    textcolor(13);
+                    cout << "Selecione a opcao a editar: ";
+                    gotoxy(x,++y);
+                    cout << "1. NOME: ";
+                    gotoxy(x,++y);
+                    cout << "2. CPF: ";
+                    gotoxy(x,++y);
+                    cout << "3. CELULAR: ";
+                    gotoxy(x,++y);
+                    cout << "4. TELEFONE: ";
+                    gotoxy(x,++y);
+                    cout << "5. DATA DE NASCIMENTO: ";
+                    gotoxy(x,++y);
+                    cout << "6. NACIONALIDADE: ";
+                    gotoxy(x,++y);
+                    cout << "7. CIDADE: ";
+                    gotoxy(x,++y);
+                    cout << "8. UF: ";
+                    gotoxy(x,++y);
+                    cout << "9. CANCELAR ";
+                    gotoxy(x,y+2);
+                } else {
+                    gotoxy(x,++y);
+                    cout << "Digite 9 para CANCELAR ";
                 }
-                cout << "Foram encontrados " << i << " resultado(s)";
-                getchar();
-            }
+                cin>> op;
+                if (i>0) {
+                    string editado;
+                    switch (op) {
+                    case 1: {
+                        gotoxy(x,++y);
+                        cout << "Digite o novo NOME: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE hospede SET nome='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Hospede editado com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 2: {
+                        gotoxy(x,++y);
+                        cout << "Digite o novo CPF: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE hospede SET cpf='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Hospede editado com sucesso.\nPressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 3: {
+                        gotoxy(x,++y);
+                        cout << "Digite o novo celular: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE hospede SET celular='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Hospede editado com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 4: {
+                        gotoxy(x,++y);
+                        cout << "Digite o novo telefone: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE hospede SET telefone='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Hospede editado com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 5: {
+                        gotoxy(x,++y);
+                        cout << "Digite o novo NOME: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE hospede SET nome='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Hospede editado com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 6: {
+                        gotoxy(x,++y);
+                        cout << "Digite a nova DATA DE NASCIMENTO: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE hospede SET data_nascimento ='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Hospede editado com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 7: {
+                        gotoxy(x,++y);
+                        cout << "Digite a nova CIDADE: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE hospede SET cidade ='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Hospede editado com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 8: {
+                        gotoxy(x,++y);
+                        cout << "Digite a nova NACIONALIDADE: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE hospede SET NACIONALIDADE ='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Hospede editado com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 9: {
+                        gotoxy(x,y+3);
+                        textcolor(3);
+                        cout << "Edicao cancelada! Voltando, aguarde ";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    default: {
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
 
-        } else {
-            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            exit(1);
+                    }
+                }
+            } while(op!=9);
         }
-        string nome;
-        cout<< "\nEditar usuário com a id:" <<id<<"\n";
-        cout<< "Editando o nome do hóspede:\n";
-
-        cout<< "Digite o novo nome do hóspede:";
-        cin>>nome;
-
-        mysql_select_db(servidor,"hoteldb");
-        if (mysql_errno(servidor)==0) {
-            string query = "UPDATE hospede SET nome='"+(nome)+"' WHERE id = "+(id)+";";
-            mysql_query(servidor,query.c_str());
-
-            if (mysql_errno(servidor)==0) {
-                cout << "Hóspede editado com sucesso.\nPressione a tecla ENTER para continuar.";
-            }
-            getchar();
-        } else {
-            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            exit(1);
-        }
-
-        cout<<"\nPresssione ENTER para continuar";
     }
 
 
