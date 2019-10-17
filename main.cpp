@@ -247,10 +247,6 @@ void telaLogin() {
 
 }
 
-void menuPrincipal() {
-
-}
-
 int main() {
     conectar();
     verificarEstruturaBD();
@@ -302,11 +298,11 @@ int main() {
             y++;
             gotoxy(x,++y);
             textcolor(1);
-            cout << "    Digite a opção desejada: ";
+            cout << "    Digite a opcao desejada: ";
             if (erro) {
-                gotoxy(45,26);
-                textcolor(4);
-                cout << "Opção Inválida. Tente Novamente!";
+                gotoxy(40,26);
+                textcolor(14);
+                cout << "Opcao Invalida. Tente Novamente!";
             }
             erro = false;
             textcolor(1);
@@ -314,44 +310,145 @@ int main() {
             cin >>opMenu;
 
             switch (opMenu) {
-            case 1: {
-                cout << "Teste 1 - ";
+            case 1: { // Hóspedes
+                gotoxy(40,26);
+                cout << "                               ";
+                gotoxy(45,26);
+                textcolor(14);
+                cout << "HOSPEDES";
+                for (int i = 0; i<3; i++) {
+                    Sleep(500);
+                    cout <<".";
+                }
 
+                int opMenuHospede;
+                bool erroHospede  = false;
+
+                do {
+                    system("CLS");
+                    margemTela();
+                    gotoxy(4,0);
+                    textcolor(3);
+                    cout << "Usuário:  " << nomeUsuarioAtivo;
+                    int x = 40,y = 3;
+                    gotoxy(x,y++);
+                    textcolor(15);
+                    cout << "- - - -    MENU HOSPEDE    - - - -";
+                    y++;
+                    y++;
+                    gotoxy(x,y++);
+                    y++;
+                    textcolor(14);
+                    cout << "    1 - CADASTRAR HOSPEDE";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    2 - LOCALIZAR HOSPEDE POR NOME";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    3 - LOCALIZAR HOSPEDE POR CPF";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    4 - EDITAR INFORMACOES DE HOSPEDE";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    5 - DELETAR HOSPEDE";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    6 - IMPRIMIR QUANTIDADE DE HOSPEDES CADASTRADOS";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    7 - LISTAR HOSPEDES POR UF";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    8 - VOLTAR AO MENU PRINCIPAL";
+                    y++;
+                    gotoxy(x,++y);
+                    textcolor(1);
+                    cout << "    Digite a opcao desejada: ";
+                    if (erroHospede) {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                    }
+                    erroHospede = false;
+                    textcolor(1);
+                    gotoxy(x+29,y);
+                    cin >>opMenuHospede;
+                } while (opMenuHospede < 1 || opMenuHospede >8);
+
+                    opMenu = 0; //Voltar ao loop do menu principal
+                break;
+            }
+            case 2: { //SUITES
+                gotoxy(40,26);
+                cout << "                               ";
+                gotoxy(45,26);
+                textcolor(14);
+                cout << "SUITES";
+                for (int i = 0; i<3; i++) {
+                    Sleep(500);
+                    cout <<".";
+                }
                 opMenu = 0;
                 break;
             }
-            case 2: {
-                cout << "Teste 2";
+            case 3: { //FUNCIONARIOS
+                gotoxy(40,26);
+                cout << "                               ";
+                gotoxy(45,26);
+                textcolor(14);
+                cout << "FUNCIONARIOS";
+                for (int i = 0; i<3; i++) {
+                    Sleep(500);
+                    cout <<".";
+                }
                 opMenu = 0;
                 break;
             }
-            case 3: {
-                cout << "Teste 3";
-
+            case 4: { //SERVIÇOS
+                gotoxy(40,26);
+                cout << "                               ";
+                gotoxy(45,26);
+                textcolor(14);
+                cout << "FUNCIONARIOS";
+                for (int i = 0; i<3; i++) {
+                    Sleep(500);
+                    cout <<".";
+                }
                 opMenu = 0;
                 break;
             }
-            case 4: {
-                cout << "Teste 4";
-
+            case 5: { //HOSPEDAGENS
+                gotoxy(40,26);
+                cout << "                               ";
+                gotoxy(45,26);
+                textcolor(14);
+                cout << "FUNCIONARIOS";
+                for (int i = 0; i<3; i++) {
+                    Sleep(500);
+                    cout <<".";
+                }
                 opMenu = 0;
                 break;
             }
-            case 5: {
-                cout << "Teste 5";
-
-                opMenu = 0;
-                break;
-            }
-            case 6: {
-                cout << "Teste 6";
-
+            case 6: { // RESERVA
+                gotoxy(40,26);
+                cout << "                               ";
+                gotoxy(45,26);
+                textcolor(14);
+                cout << "FUNCIONARIOS";
+                for (int i = 0; i<3; i++) {
+                    Sleep(500);
+                    cout <<".";
+                }
                 opMenu = 0;
                 break;
             }
             case 7: {
+                gotoxy(40,26);
+                cout << "                               ";
                 gotoxy(45,26);
-                textcolor(4);
+                textcolor(14);
                 cout << "Fazendo Logoff";
                 for (int i = 0; i<5; i++) {
                     Sleep(500);
@@ -361,8 +458,10 @@ int main() {
                 break;
             }
             case 8: {
+                gotoxy(40,26);
+                cout << "                               ";
                 gotoxy(45,26);
-                textcolor(4);
+                textcolor(14);
                 cout << "Saindo do programa";
                 for (int i = 0; i<5; i++) {
                     Sleep(500);
@@ -372,7 +471,9 @@ int main() {
                 break;
             }
             default: {
-                cout << "Teste 9";
+                gotoxy(40,26);
+                textcolor(14);
+                cout << "Opcao Invalida. Tente Novamente!";
                 erro = true;
                 break;
             }
@@ -381,7 +482,7 @@ int main() {
 
     } while (!loginCHK);
     gotoxy(0,29);
-    cout << "Saindo...";
+    //cout << "Saindo...";
 
     return 0;
 }
