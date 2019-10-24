@@ -183,14 +183,26 @@ void margemTela() {
     desenharRetangulo(119,29);
 }
 
+void carregar (){
+    textcolor(4);
+    desenharRetangulo2(40,3,40,13);
+    gotoxy(41,14);
+    textcolor(1);
+    for (int i = 0; i<38; i++) {
+            Sleep(50);
+            printf("%c",219);
+        }
+
+}
+
 void telaLogin() {
     string login, senha;
     margemTela();
     textcolor(3);
     desenharRetangulo2(50,15,33,7);
     textcolor(2);
-    gotoxy(47, 9);
-    printf("SISTEMA DE HOTELARIA");
+    gotoxy(40, 9);
+    printf("SISTEMA DE GERENCIAMENTO HOTEL STEP");
     gotoxy(40, 12);
     printf("LOGIN:");
     gotoxy(40, 14);
@@ -253,7 +265,7 @@ int main() {
     verificarEstruturaBD();
     setlocale(LC_ALL, "pt_BR_utf8");
     do {//Loop de tela de Login
-        if(!loginCHK) {
+       if(!loginCHK) {
             telaLogin();
             Sleep(500);
         }
@@ -310,6 +322,9 @@ int main() {
             gotoxy(x+29,y);
             cin >>opMenu;
 
+
+
+
             switch (opMenu) {
             case 1: { // Hóspedes
                 gotoxy(40,26);
@@ -317,15 +332,16 @@ int main() {
                 gotoxy(45,26);
                 textcolor(14);
                 cout << "HOSPEDES";
-                for (int i = 0; i<3; i++) {
+                /*for (int i = 0; i<3; i++) {
                     Sleep(500);
                     cout <<".";
-                }
+                }*/
 
                 int opMenuHospede;
                 bool erroHospede  = false;
 
                 do {
+                    carregar();
                     system("CLS");
                     margemTela();
                     gotoxy(4,0);
