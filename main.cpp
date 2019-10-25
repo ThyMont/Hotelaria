@@ -559,11 +559,111 @@ int main() {
             case 3: { //FUNCIONARIOS
                 gotoxy(40,26);
                 cout << "                               ";
+                carregar();
                 gotoxy(45,26);
                 textcolor(14);
-                carregar();
+
+                int opMenuFuncionario;
+                bool erro  = false;
+
+                do {
+                    system("CLS");
+                    margemTela();
+                    gotoxy(4,0);
+                    textcolor(3);
+                    cout << "Usuario:  " << nomeUsuarioAtivo;
+                    int x = 40,y = 3;
+                    gotoxy(x,y++);
+                    textcolor(15);
+                    cout << "- - - -    MENU FUNCIONARIOSS    - - - -";
+                    y++;
+                    y++;
+                    gotoxy(x,y++);
+                    y++;
+                    textcolor(14);
+                    cout << "    1 - CADASTRAR FUNCIONARIOS";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    2 - LOCALIZAR FUNCIONARIOS POR NUMERO";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    3 - LISTAR FUNCIONARIOS POR STATUS";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    4 - EDITAR INFORMACOES DE FUNCIONARIO";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    5 - DELETAR FUNCIONARIO";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    6 - VOLTAR AO MENU PRINCIPAL";
+                    y++;
+                    gotoxy(x,++y);
+                    textcolor(1);
+                    cout << "    Digite a opcao desejada: ";
+                    if (erro) {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                    }
+                    erro = false;
+                    textcolor(1);
+                    gotoxy(x+29,y);
+                    cin >>opMenuFuncionario;
+
+                    switch (opMenuFuncionario) {
+                    case 1: { //Cadastrar FUNCIONARIO
+                        funcionario f;
+                        f.cadastrarFuncionario(servidor);
+                        opMenuFuncionario = 0;
+                        break;
+                    }
+                    case 2: { //LOCALIZAR FUNCIONARIO por numero
+                        funcionario f;
+                        f.localizarPorNumero(servidor);
+                        opMenuFuncionario = 0;
+                        break;
+                    }
+                    case 3: { //Listar funcionarios por status
+                        funcionario f;
+                        f.listarPorStatus(servidor);
+                        opMenuFuncionario = 0;
+                        break;
+                    }
+                    case 4: { //EDITAR INFORMACOES DE Funcionario
+                        funcionario f;
+                        s.editarFuncionario(servidor);
+                        opMenuFuncionario = 0;
+                        break;
+                    }
+                    case 5: { //DELETAR hospede
+                        funcionario f;
+                        s.excluirFuncionario(servidor);
+                        opMenuFuncionario = 0;
+                        break;
+                    }
+                    case 6: {
+                        gotoxy(45,26);
+                        textcolor(14);
+                        cout << "Voltando ao menu principal";
+                        carregar();
+                        gotoxy(0,29);
+                        break;
+                    }
+                    default: {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                        erro = true;
+                        break;
+                        break;
+                    }
+                    }
+
+                } while (opMenuFuncionario < 1 || opMenuFuncionario >6);
                 opMenu = 0;
                 break;
+
             }
             case 4: { //SERVIÇOS
                 gotoxy(40,26);
