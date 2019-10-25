@@ -333,7 +333,7 @@ public:
         string id;
         cin>>id;
 
-        string query = "SELECT * WHERE id LIKE '%"+id+"%';";
+        string query = "SELECT * from suite WHERE id LIKE '%"+id+"%';";
         mysql_query(servidor,query.c_str());
         gotoxy(10,9);
         textcolor(6);
@@ -642,5 +642,15 @@ public:
                 }
             }
         } while (op!=3&&op!=1);
+    }
+
+    bool verificarDisponibilidade(MYSQL *servidor) {
+        int i = 0
+
+        if (i>0) {
+            return true;
+        } else {
+            return false
+        }
     }
 };

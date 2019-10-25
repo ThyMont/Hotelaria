@@ -230,7 +230,7 @@ public:
         }
     }
 
-    void localizarPorNumero(MYSQL *servidor) {
+    void localizarPorDescricao(MYSQL *servidor) {
         int op;
         do {
             system("CLS");
@@ -254,7 +254,7 @@ public:
         carregar();
     }
 
-    void listarPorStatus(MYSQL *servidor) {
+    void listarPorDescricao(MYSQL *servidor) {
         system("CLS");
         margemTela();
         gotoxy(4,0);
@@ -324,7 +324,7 @@ public:
         string id;
         cin>>id;
 
-        string query = "SELECT * WHERE id LIKE '%"+id+"%';";
+        string query = "SELECT * from produto WHERE id LIKE '%"+id+"%';";
         mysql_query(servidor,query.c_str());
         gotoxy(10,9);
         textcolor(6);
@@ -341,30 +341,26 @@ public:
             int i = 0;
             textcolor(15);
             while( ( row = mysql_fetch_row(res)) != NULL ) {
-                    gotoxy(x,y++);
-                    cout << ++i<<". ID: "<<row[0] << " Descricao: "<< row[1] <<"\t Preco: "<< row[2] << endl;
-                    Sleep(500);
-                }
+                gotoxy(x,y++);
+                cout << ++i<<". ID: "<<row[0] << " Descricao: "<< row[1] <<"\t Preco: "<< row[2] << endl;
+                Sleep(500);
+            }
 
             if(i>0) {
                 gotoxy(x,y+4);
                 textcolor(13);
                 cout << "Selecione a opcao a editar: ";
                 gotoxy(x,y+5);
-                cout << "1. NUMERO: ";
+                cout << "1. DESCRICAO: ";
                 gotoxy(x,y+6);
-                cout << "2. VAGAS: ";
+                cout << "2. PRECO: ";
                 gotoxy(x,y+7);
-                cout << "3. PRECO: ";
+                cout << "3. CANCELAR: ";
                 gotoxy(x,y+8);
-                cout << "4. STATUS: ";
-                gotoxy(x,y+9);
-                cout << "5. CANCELAR ";
-                gotoxy(x,y+14);
             } else {
                 textcolor(13);
                 gotoxy(x,y+5);
-                cout << "Digite 5 para CANCELAR ";
+                cout << "Digite 3 para CANCELAR ";
                 gotoxy(x,y+6);
             }
             do {
@@ -374,7 +370,7 @@ public:
                     switch (op) {
                     case 1: {
                         gotoxy(x,++y);
-                        cout << "Digite o novo NUMERO: ";
+                        cout << "Digite a nova DESCRICAO: ";
                         cin >> editado;
                         mysql_select_db(servidor,"hoteldb");
                         if (mysql_errno(servidor)==0) {
@@ -393,26 +389,6 @@ public:
                         break;
                     }
                     case 2: {
-                        gotoxy(x,++y);
-                        cout << "Digite a nova quantidade de VAGAS: ";
-                        cin >> editado;
-                        mysql_select_db(servidor,"hoteldb");
-                        if (mysql_errno(servidor)==0) {
-                            string query = "UPDATE produto SET vagas='"+(editado)+"' WHERE id = "+(id)+";";
-                            mysql_query(servidor,query.c_str());
-                            if (mysql_errno(servidor)==0) {
-                                gotoxy(x,++y);
-                                cout << "Produto editada com sucesso.\nPressione a tecla ENTER para continuar.";
-                            }
-                            getchar();
-                        } else {
-                            gotoxy(x,++y);
-                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-                            exit(1);
-                        }
-                        break;
-                    }
-                    case 3: {
                         gotoxy(x,++y);
                         cout << "Digite o novo preco: ";
                         cin >> editado;
@@ -452,7 +428,7 @@ public:
                         }
                         break;
                     }
-                    case 5: {
+                    case 3: {
                         gotoxy(x,y+3);
                         textcolor(3);
                         cout << "Edicao cancelada! Voltando, aguarde ";
@@ -484,7 +460,7 @@ public:
                     }
                     }
                 }
-            } while(op<1||op>5);
+            } while(op<1||op>3);
         }
     }
 

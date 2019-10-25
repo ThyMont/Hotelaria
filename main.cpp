@@ -8,6 +8,7 @@
 #include "funcionario.cpp"
 #include "hospede.cpp"
 #include "suite.cpp"
+#include "produto.cpp"
 #include <mysql.h>
 
 using namespace std;
@@ -81,7 +82,7 @@ void verificarEstruturaBD() {
     }
 
      //Criando a estrutura da tabela de produtos
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, descricao VARCHAR(40), status varchar(15) DEFAULT ('sim'), preco DECIMAL(6,2))");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, descricao VARCHAR(40), preco DECIMAL(6,2))");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela PRODUTO Criada com Sucesso!\n";
     } else {
@@ -695,7 +696,116 @@ int main() {
                 opMenu = 0;
                 break;
             }
-            case 7: {
+            case 7: { // PRODUTOS
+                gotoxy(40,26);
+                cout << "                               ";
+                carregar();
+                gotoxy(45,26);
+                textcolor(14);
+
+                int opMenuProduto;
+                bool erro  = false;
+
+                do {
+                    system("CLS");
+                    margemTela();
+                    gotoxy(4,0);
+                    textcolor(3);
+                    cout << "Usuario:  " << nomeUsuarioAtivo;
+                    int x = 40,y = 3;
+                    gotoxy(x,y++);
+                    textcolor(15);
+                    cout << "- - - -    MENU PRODUTOS    - - - -";
+                    y++;
+                    y++;
+                    gotoxy(x,y++);
+                    y++;
+                    textcolor(14);
+                    cout << "    1 - CADASTRAR PRODUTO";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    2 - LOCALIZAR PRODUTO POR NUMERO";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    3 - LISTAR PRODUTOS POR DESCRICAO";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    4 - EDITAR INFORMACOES DE PRODUTO";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    5 - DELETAR PRODUTO";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    6 - VOLTAR AO MENU PRINCIPAL";
+                    y++;
+                    gotoxy(x,++y);
+                    textcolor(1);
+                    cout << "    Digite a opcao desejada: ";
+                    if (erro) {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                    }
+                    erro = false;
+                    textcolor(1);
+                    gotoxy(x+29,y);
+                    cin >>opMenuProduto;
+
+                    switch (opMenuProduto) {
+                    case 1: { //Cadastrar Produto
+                        produto s;
+                        s.cadastrarProduto(servidor);
+                        opMenuProduto = 0;
+                        break;
+                    }
+                    case 2: { //LOCALIZAR Produto por Descricao
+                        produto s;
+                        s.localizarPorDescricao(servidor);
+                        opMenuProduto = 0;
+                        break;
+                    }
+                    case 3: { //Listar produtos por status
+                        produto s;
+                        s.listarPorDescricao(servidor);
+                        opMenuProduto = 0;
+                        break;
+                    }
+                    case 4: { //EDITAR INFORMACOES DE Produto
+                        produto s;
+                        s.editarProduto(servidor);
+                        opMenuProduto = 0;
+                        break;
+                    }
+                    case 5: { //DELETAR hospede
+                        produto s;
+                        s.excluirProduto(servidor);
+                        opMenuProduto = 0;
+                        break;
+                    }
+                    case 6: {
+                        gotoxy(45,26);
+                        textcolor(14);
+                        cout << "Voltando ao menu principal";
+                        carregar();
+                        gotoxy(0,29);
+                        break;
+                    }
+                    default: {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                        erro = true;
+                        break;
+                        break;
+                    }
+                    }
+
+                } while (opMenuProduto < 1 || opMenuProduto >6);
+                opMenu = 0;
+                break;
+
+            }
+            case 8: {
                 gotoxy(40,26);
                 cout << "                               ";
                 gotoxy(45,26);
@@ -705,7 +815,7 @@ int main() {
                 loginCHK = false;
                 break;
             }
-            case 8: {
+            case 9: {
                 gotoxy(40,26);
                 cout << "                               ";
                 gotoxy(45,26);
@@ -724,11 +834,10 @@ int main() {
                 break;
             }
             }
-        } while (opMenu<1||opMenu>8);
+        } while (opMenu<1||opMenu>9);
 
     } while (!loginCHK);
     gotoxy(0,29);
-    //cout << "Saindo...";
 
     return 0;
 }
