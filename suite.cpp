@@ -146,13 +146,13 @@ public:
             gotoxy(40,10);
 
             textcolor(11);
-            gotoxy(50,6);
+            gotoxy(52,6);
             cin>>numero;
-            gotoxy(49,7);
+            gotoxy(51,7);
             cin>>ramal;
-            gotoxy(53,8);
+            gotoxy(51,8);
             cin>>vagas;
-            gotoxy(54,9);
+            gotoxy(51,9);
             cin>>preco;
 
 
