@@ -37,8 +37,10 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="funcionario.cpp" />
+		<Unit filename="hospedagem.cpp" />
 		<Unit filename="hospede.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="produto.cpp" />
 		<Unit filename="suite.cpp" />
 		<Extensions>
 			<code_completion />

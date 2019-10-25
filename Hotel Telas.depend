@@ -115,7 +115,7 @@
 	<stdlib.h>
 	<string.h>
 
-1572026088 c:\users\papot\documents\git thymont\hotelaria\suite.cpp
+1572026153 c:\users\papot\documents\git thymont\hotelaria\suite.cpp
 	<iostream>
 	<mysql.h>
 	<windows.h>
@@ -123,7 +123,7 @@
 	<stdlib.h>
 	<string.h>
 
-1572025416 source:c:\users\papot\documents\git thymont\hotelaria\produto.cpp
+1572026088 source:c:\users\papot\documents\git thymont\hotelaria\produto.cpp
 	<iostream>
 	<mysql.h>
 	<windows.h>
@@ -132,6 +132,14 @@
 	<string.h>
 
 1572026088 c:\users\papot\documents\git thymont\hotelaria\produto.cpp
+	<iostream>
+	<mysql.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1572026088 source:c:\users\papot\documents\git thymont\hotelaria\hospedagem.cpp
 	<iostream>
 	<mysql.h>
 	<windows.h>

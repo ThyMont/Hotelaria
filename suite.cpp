@@ -645,12 +645,20 @@ public:
     }
 
     bool verificarDisponibilidade(MYSQL *servidor) {
-        int i = 0
+        int i = 0;
 
+        string query = "SELECT * from suite WHERE status LIKE '%disponivel%';";
+        mysql_query(servidor,query.c_str());
+        MYSQL_RES* res = mysql_use_result(servidor);
+        MYSQL_ROW row;
+        int i = 0;
+        while( ( row = mysql_fetch_row(res)) != NULL ) {
+            i++;
+        }
         if (i>0) {
             return true;
         } else {
-            return false
+            return false;
         }
     }
 };
