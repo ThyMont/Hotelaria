@@ -82,7 +82,7 @@ void verificarEstruturaBD() {
     }
 
     //Criando a estrutura da tabela de produtos
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, descricao VARCHAR(40), preco DECIMAL(6,2))");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS produtos (id int PRIMARY KEY AUTO_INCREMENT, descricao VARCHAR(40), preco DECIMAL(6,2))");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela PRODUTO Criada com Sucesso!\n";
     } else {
