@@ -80,6 +80,15 @@ void verificarEstruturaBD() {
         exit(1);
     }
 
+     //Criando a estrutura da tabela de produtos
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, descricao VARCHAR(40), status varchar(15) DEFAULT ('sim'), preco DECIMAL(6,2))");
+    if (mysql_errno(servidor)==0) {
+        cout<< "Tabela PRODUTO Criada com Sucesso!\n";
+    } else {
+        cout<<"\nErro na Criação da tabela no BD "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+        exit(1);
+    }
+
     //criando a estrutura da tabela de hospedagem
     mysql_query(servidor, "CREATE TABLE IF NOT EXISTS hospedagem (id int PRIMARY KEY AUTO_INCREMENT, id_hospede int, id_suite int, id_funcionario int, data_entrada date, data_saida date, status varchar(20), conta_final DECIMAL(6,2), forma_pagamento varchar(10), senha varchar(6))");
     mysql_query(servidor, "ALTER TABLE hospedagem ADD FOREIGN KEY (id_hospede) REFERENCES hospede(id);");
@@ -291,7 +300,7 @@ int main() {
             cout << "    3 - FUNCIONARIOS";
             gotoxy(x,y++);
             y++;
-            cout << "    4 - SERVICOS";
+            cout << "    4 - SERVICOS E PRODUTOS";
             gotoxy(x,y++);
             y++;
             cout << "    5 - HOSPEDAGEM";
@@ -300,10 +309,13 @@ int main() {
             cout << "    6 - RESERVA";
             gotoxy(x,y++);
             y++;
-            cout << "    7 - LOGOFF";
+            cout << "    7 - VENDA";
             gotoxy(x,y++);
             y++;
-            cout << "    8 - FECHAR PROGRAMA";
+            cout << "    8 - LOGOFF";
+            gotoxy(x,y++);
+            y++;
+            cout << "    9 - FECHAR PROGRAMA";
             y++;
             gotoxy(x,++y);
             textcolor(1);
