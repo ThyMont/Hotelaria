@@ -7,6 +7,7 @@
 #include <windows.h>
 #include "funcionario.cpp"
 #include "hospede.cpp"
+#include "suite.cpp"
 #include <mysql.h>
 
 using namespace std;
@@ -317,9 +318,6 @@ int main() {
             gotoxy(x+29,y);
             cin >>opMenu;
 
-
-
-
             switch (opMenu) {
             case 1: { // Hóspedes
                 gotoxy(40,26);
@@ -431,10 +429,7 @@ int main() {
                         gotoxy(45,26);
                         textcolor(14);
                         cout << "Voltando ao menu principal";
-                        for (int i = 0; i<5; i++) {
-                            Sleep(500);
-                            cout <<".";
-                        }
+                        carregar();
                         gotoxy(0,29);
                         break;
                     }
@@ -456,9 +451,108 @@ int main() {
             case 2: { //SUITES
                 gotoxy(40,26);
                 cout << "                               ";
+                carregar();
                 gotoxy(45,26);
                 textcolor(14);
-                carregar();
+
+                int opMenuSuite;
+                bool erro  = false;
+
+                do {
+                    system("CLS");
+                    margemTela();
+                    gotoxy(4,0);
+                    textcolor(3);
+                    cout << "Usuario:  " << nomeUsuarioAtivo;
+                    int x = 40,y = 3;
+                    gotoxy(x,y++);
+                    textcolor(15);
+                    cout << "- - - -    MENU SUITES    - - - -";
+                    y++;
+                    y++;
+                    gotoxy(x,y++);
+                    y++;
+                    textcolor(14);
+                    cout << "    1 - CADASTRAR SUITE";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    2 - LOCALIZAR SUITE POR NUMERO";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    3 - LISTAR SUITES POR STATUS";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    4 - EDITAR INFORMACOES DE SUITE";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    5 - DELETAR SUITE";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    6 - VOLTAR AO MENU PRINCIPAL";
+                    y++;
+                    gotoxy(x,++y);
+                    textcolor(1);
+                    cout << "    Digite a opcao desejada: ";
+                    if (erro) {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                    }
+                    erro = false;
+                    textcolor(1);
+                    gotoxy(x+29,y);
+                    cin >>opMenuSuite;
+
+                    switch (opMenuSuite) {
+                    case 1: { //Cadastrar Suite
+                        suite s;
+                        s.cadastrarSuite(servidor);
+                        opMenuSuite = 0;
+                        break;
+                    }
+                    case 2: { //LOCALIZAR Suite por numero
+                        suite s;
+                        s.localizarPorNumero(servidor);
+                        opMenuSuite = 0;
+                        break;
+                    }
+                    case 3: { //Listar suites por status
+                        suite s;
+                        s.listarPorStatus(servidor);
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 4: { //EDITAR INFORMACOES DE Suite
+                        suite s;
+                        s.editarSuite(servidor);
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 5: { //DELETAR hospede
+                        suite s;
+                        s.excluirSuite(servidor);
+                        opMenuHospede = 0;
+                        break;
+                    }
+                    case 6: {
+                        gotoxy(45,26);
+                        textcolor(14);
+                        cout << "Voltando ao menu principal";
+                        carregar();
+                        gotoxy(0,29);
+                        break;
+                    }
+                    default: {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                        erro = true;
+                        break;
+                        break;
+                    }
+                    }
+
+                } while (opMenuSuite < 1 || opMenuSuite >6);
                 opMenu = 0;
                 break;
             }
