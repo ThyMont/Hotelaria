@@ -9,7 +9,7 @@
 using namespace std;
 
 
-class suite {
+class hospedagem {
 private:
     void gotoxy(int coluna, int linha) {
         COORD point;

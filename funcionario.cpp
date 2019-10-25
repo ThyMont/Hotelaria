@@ -206,7 +206,7 @@ public:
             cin>>cidade;
             gotoxy(48,13);
             cin>>uf;
-            gotoxy(67,13);
+            gotoxy(53,14);
             cin>>salario;
 
             do {

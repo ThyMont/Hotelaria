@@ -9,6 +9,7 @@
 #include "hospede.cpp"
 #include "suite.cpp"
 #include "produto.cpp"
+#include "hospedagem.cpp"
 #include <mysql.h>
 
 using namespace std;
@@ -81,7 +82,7 @@ void verificarEstruturaBD() {
         exit(1);
     }
 
-    //Criando a estrutura da tabela de produtos
+    //Criando a estrutura da tabela de produtos e servicos
     mysql_query(servidor, "CREATE TABLE IF NOT EXISTS produtos (id int PRIMARY KEY AUTO_INCREMENT, descricao VARCHAR(40), preco DECIMAL(6,2))");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela PRODUTO Criada com Sucesso!\n";
@@ -103,10 +104,10 @@ void verificarEstruturaBD() {
         exit(1);
     }
 
-    //criando a estrutura da tabela de serviços
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS vendas (id int PRIMARY KEY AUTO_INCREMENT, id_hospedagem int, id_funcionario int, data_entrada date, data_saida date, status varchar(20), valor DECIMAL(6,2))");
+    //criando a estrutura da tabela de vendas
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS vendas (id int PRIMARY KEY AUTO_INCREMENT, id_hospedagem int, id_funcionario int, data_venda date, status varchar(20), valor DECIMAL(6,2))");
     mysql_query(servidor, "ALTER TABLE vendas ADD FOREIGN KEY (id_funcionario) REFERENCES funcionario(id);");
-    mysql_query(servidor, "ALTER TABLE vebndas ADD FOREIGN KEY (id_hospedagem) REFERENCES hospedagem(id);");
+    mysql_query(servidor, "ALTER TABLE vendas ADD FOREIGN KEY (id_hospedagem) REFERENCES hospedagem(id);");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela SERVIÇO Criada com Sucesso!\n";
     } else {
@@ -669,7 +670,7 @@ int main() {
                 break;
 
             }
-            case 4: { //SERVIÇOS
+            case 4: { //SERVIÇOS e produtos
                 gotoxy(40,26);
                 cout << "                               ";
                 carregar();
@@ -781,11 +782,132 @@ int main() {
             case 5: { //HOSPEDAGENS
                 gotoxy(40,26);
                 cout << "                               ";
+                carregar();
                 gotoxy(45,26);
                 textcolor(14);
-                carregar();
-                opMenu = 0;
+
+                int opMenuHospedagem;
+                bool erroHospedagem  = false;
+
+                do {
+                    system("CLS");
+                    margemTela();
+                    gotoxy(4,0);
+                    textcolor(3);
+                    cout << "Usuario:  " << nomeUsuarioAtivo;
+                    int x = 40,y = 3;
+                    gotoxy(x,y++);
+                    textcolor(15);
+                    cout << "- - - -    MENU HOSPEDAGEM    - - - -";
+                    y++;
+                    y++;
+                    gotoxy(x,y++);
+                    y++;
+                    textcolor(14);
+                    cout << "    1 - CADASTRAR HOSPEDAGEM";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    2 - LOCALIZAR HOSPEDAGEM POR NOME";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    3 - LOCALIZAR HOSPEDAGEM POR CPF";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    4 - EDITAR INFORMACOES DE HOSPEDAGEM";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    5 - DELETAR HOSPEDAGEM";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    6 - IMPRIMIR QUANTIDADE DE HOSPEDAGEMS CADASTRADOS";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    7 - LISTAR HOSPEDAGEMS POR UF";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    8 - VOLTAR AO MENU PRINCIPAL";
+                    y++;
+                    gotoxy(x,++y);
+                    textcolor(1);
+                    cout << "    Digite a opcao desejada: ";
+                    if (erroHospedagem) {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                    }
+                    erroHospedagem = false;
+                    textcolor(1);
+                    gotoxy(x+29,y);
+                    cin >>opMenuHospedagem;
+
+                    switch (opMenuHospedagem) {
+                    case 1: { //Cadastrar Hóspede
+                        hospedagem h;
+                        //h.cadastrarHospedagem(servidor);
+                        opMenuHospedagem = 0;
+                        break;
+                    }
+                    case 2: { //LOCALIZAR HOSPEDAGEM POR NOME
+                        hospedagem h;
+                        //h.localizarPorNome(servidor);
+                        opMenuHospedagem = 0;
+                        break;
+                    }
+                    case 3: { //LOCALIZAR HOSPEDAGEM POR CPF
+                        hospedagem h;
+                        //h.localizarPorCPF(servidor);
+                        opMenuHospedagem = 0;
+                        break;
+                    }
+                    case 4: { //EDITAR INFORMACOES DE HOSPEDAGEM
+                        hospedagem h;
+                        //h.editarHospedagem(servidor);
+                        opMenuHospedagem = 0;
+                        break;
+                    }
+                    case 5: { //DELETAR hospedagem
+                        hospedagem h;
+                        //h.excluirHospedagem(servidor);
+                        opMenuHospedagem = 0;
+                        break;
+                    }
+                    case 6: {
+                        hospedagem h;
+                        //h.contarhospedagems(servidor);
+                        getchar();
+                        opMenuHospedagem = 0;
+                        break;
+                    }
+                    case 7: { //Listar Hóspedes por UF
+                        hospedagem h;
+                       // h.listarporUF(servidor);
+                        getchar();
+                        opMenuHospedagem = 0;
+                        break;
+                    }
+                    case 8: {
+                        gotoxy(45,26);
+                        textcolor(14);
+                        cout << "Voltando ao menu principal";
+                        carregar();
+                        gotoxy(0,29);
+                        break;
+                    }
+                    default: {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                        erro = true;
+                        break;
+                        break;
+                    }
+                    }
+
+                } while (opMenuHospedagem < 1 || opMenuHospedagem >8);
+
+                opMenu = 0; //Voltar ao loop do menu principal
                 break;
+
             }
             case 6: { // RESERVA
                 gotoxy(40,26);
@@ -797,6 +919,12 @@ int main() {
                 break;
             }
             case 7: { // PRODUTOS
+                gotoxy(40,26);
+                cout << "                               ";
+                gotoxy(45,26);
+                textcolor(14);
+                carregar();
+                opMenu = 0;
                 break;
             }
             case 8: {
