@@ -101,10 +101,10 @@ private:
 
 public:
 
-    void cadastrarHospedagemBD(MYSQL *servidor, string idHospede, string idSuite, string dataEntrada){
-         mysql_select_db(servidor,"hoteldb");
+    void cadastrarHospedagemBD(MYSQL *servidor, string idHospede, string idSuite, string dataEntrada) {
+        mysql_select_db(servidor,"hoteldb");
         if (mysql_errno(servidor)==0) {
-            string query = "INSERT INTO hospedagem (id_hospede,	id_suite, data_entrada) VALUES('"+(idHospede)+"', '"+(idSuite)+"', '"+(dataEntrada)+"','"+(telefone)+"', '"+(data_nascimento)+"', '"+(nacionalidade)+"', '"+(cidade)+"', '"+(uf)+"');";
+            string query = "INSERT INTO hospedagem (id_hospede,	id_suite, data_entrada) VALUES('"+(idHospede)+"', '"+(idSuite)+"', '"+(dataEntrada)+"');";
             mysql_query(servidor,query.c_str());
 
             if (mysql_errno(servidor)==0) {
@@ -123,11 +123,11 @@ public:
         }
     }
 
-    void cadastrarHospedagem (MYSQL *servidor){
-            string idHospede, idSuite, dataEntrada;
-            int confirmarCadastro;
-            do{
-                    carregar();
+    void cadastrarHospedagem (MYSQL *servidor) {
+        string idHospede, idSuite, dataEntrada;
+        int confirmarCadastro;
+        do {
+            carregar();
             system("CLS");
             margemTela();
             gotoxy(4,0);
@@ -189,4 +189,70 @@ public:
             } while ((confirmarCadastro<1 && confirmarCadastro > 3));
         } while ((confirmarCadastro<1 && confirmarCadastro > 3)||confirmarCadastro == 2);
     }
+
+    void localizarPorNomeBD(MYSQL *servidor, string nome) {
+        mysql_select_db(servidor,"hoteldb");
+        if (mysql_errno(servidor)==0) {
+            string query = "SELECT id, nome, cpf from hospede WHERE nome LIKE \'%%"+nome+"%%\';";
+            mysql_query(servidor,query.c_str());
+            gotoxy(40,11);
+            textcolor(6);
+            cout << "Pesquisando";
+            for(int i = 1; i<5; i++) {
+                Sleep(500);
+                cout << ".";
+            }
+
+            if (mysql_errno(servidor)==0) {
+                int x = 35, y = 14;
+                gotoxy(40,12);
+                textcolor(14);
+                cout << "Pesquisa realizada com sucesso!";
+                Sleep(1);
+                MYSQL_RES* res = mysql_use_result(servidor);
+                MYSQL_ROW row;
+                int i = 0;
+                textcolor(15);
+                while( ( row = mysql_fetch_row(res)) != NULL ) {
+                    gotoxy(x,y++);
+                    cout << ++i<<". ID: "<<row[0] << " Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
+                    Sleep(500);
+                }
+                y++;
+                gotoxy(x,++y);
+                textcolor(13);
+                cout << "Foram encontrados " << i << " resultado(s)";
+
+                gotoxy(x,y+2);
+                textcolor(5);
+                cout << "Digite 1 para RETORNAR ou 2 para PESQUISAR NOVAMENTE ";
+            }
+        } else {
+            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+            exit(1);
+        }
+    }
+
+    void localizarPorNome(MYSQL *servidor) {
+        int op;
+        do {
+            system("CLS");
+            margemTela();
+            gotoxy(4,0);
+            textcolor(3);
+            gotoxy(35,3);
+            textcolor(15);
+            cout << "- - - -    LOCALIZAR HOSPEDE POR NOME   - - - -";
+            gotoxy(35,8);
+            textcolor(12);
+            cout << "DIGITE O NOME DESEJADO: ";
+            textcolor(11);
+            gotoxy(35,10);
+            string nome;
+            cin>>nome;
+            localizarPorNomeBD(servidor, nome);
+            cin>> op;
+        } while(op!=1);
+    }
+
 };

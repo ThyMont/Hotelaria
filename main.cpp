@@ -64,7 +64,7 @@ void verificarEstruturaBD() {
     }
 
     //Criando a estrutura da tabela da suite
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, numero SMALLINT UNIQUE NOT NULL, vagas SMALLINT(2)  , status varchar(15) DEFAULT ('N'), preco DECIMAL(6,2))");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, numero SMALLINT UNIQUE NOT NULL, ramal VARCHAR(20), vagas SMALLINT(2)  , status varchar(15) DEFAULT ('N'), preco DECIMAL(6,2))");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela SUITE Criada com Sucesso!\n";
     } else {
@@ -806,7 +806,7 @@ int main() {
                     cout << "    1 - CADASTRAR HOSPEDAGEM";
                     gotoxy(x,y++);
                     y++;
-                    cout << "    2 - LOCALIZAR HOSPEDAGEM POR NOME";
+                    cout << "    2 - LOCALIZAR HOSPEDAGEM POR HOSPEDE";
                     gotoxy(x,y++);
                     y++;
                     cout << "    3 - LOCALIZAR HOSPEDAGEM POR CPF";
@@ -830,9 +830,9 @@ int main() {
                     textcolor(1);
                     cout << "    Digite a opcao desejada: ";
                     if (erroHospedagem) {
-                        gotoxy(40,26);
+                        gotoxy(30,26);
                         textcolor(14);
-                        cout << "Opcao Invalida. Tente Novamente!";
+                        cout << "Opcao Invalida ou nao ha suite disponivel. Tente Novamente!";
                     }
                     erroHospedagem = false;
                     textcolor(1);
@@ -842,13 +842,19 @@ int main() {
                     switch (opMenuHospedagem) {
                     case 1: { //Cadastrar Hóspede
                         hospedagem h;
-                        //h.cadastrarHospedagem(servidor);
+                        suite s;
+                        if (s.verificarDisponibilidade(servidor)) {
+                            h.cadastrarHospedagem(servidor);
+                        } else {
+                            erroHospedagem = true;
+                        }
+
                         opMenuHospedagem = 0;
                         break;
                     }
-                    case 2: { //LOCALIZAR HOSPEDAGEM POR NOME
+                    case 2: { //LOCALIZAR HOSPEDAGEM POR NOME DO HOSPEDE
                         hospedagem h;
-                        //h.localizarPorNome(servidor);
+                        h.localizarPorNome(servidor);
                         opMenuHospedagem = 0;
                         break;
                     }
@@ -879,7 +885,7 @@ int main() {
                     }
                     case 7: { //Listar Hóspedes por UF
                         hospedagem h;
-                       // h.listarporUF(servidor);
+                        // h.listarporUF(servidor);
                         getchar();
                         opMenuHospedagem = 0;
                         break;
