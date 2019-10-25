@@ -102,7 +102,25 @@ private:
 public:
 
     void cadastrarHospedagemBD(MYSQL *servidor, string idHospede, string idSuite, string dataEntrada){
+         mysql_select_db(servidor,"hoteldb");
+        if (mysql_errno(servidor)==0) {
+            string query = "INSERT INTO hospedagem (id_hospede,	id_suite, data_entrada) VALUES('"+(idHospede)+"', '"+(idSuite)+"', '"+(dataEntrada)+"','"+(telefone)+"', '"+(data_nascimento)+"', '"+(nacionalidade)+"', '"+(cidade)+"', '"+(uf)+"');";
+            mysql_query(servidor,query.c_str());
 
+            if (mysql_errno(servidor)==0) {
+                textcolor(10);
+                gotoxy(40,20);
+                cout << "Hospedagem cadastrada com sucesso.";
+                gotoxy(40,21);
+                cout << "Retornando ao menu de HOSPEDAGEM";
+                carregar();
+            }
+            getchar();
+        } else {
+            gotoxy(20,16);
+            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+            exit(1);
+        }
     }
 
     void cadastrarHospedagem (MYSQL *servidor){
