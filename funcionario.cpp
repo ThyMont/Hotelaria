@@ -609,67 +609,6 @@ public:
         }
     }
 
-
-
-    /*void editarFuncionario(MYSQL *servidor) {
-        system("CLS");
-        mysql_select_db(servidor,"hoteldb");
-        string id;
-        if (mysql_errno(servidor)==0) {
-            cout << "\n---  EDITAR Hóspede  ---\n";
-            cout << "\n\nDigite a ID do hóspede a ser editado: ";
-            cin >> id;
-            string query = "SELECT id, nome,cpf from funcionario WHERE id LIKE '%"+id+"%';";
-            mysql_query(servidor,query.c_str());
-
-            cout << "Aguarde";
-            for(int i = 1; i<10; i++) {
-                Sleep(500);
-                cout << ".";
-            }
-
-            if (mysql_errno(servidor)==0) {
-                cout << "\nPronto!\n";
-                Sleep(1);
-                MYSQL_RES* res = mysql_use_result(servidor);
-                MYSQL_ROW row;
-                int i = 0;
-                while( ( row = mysql_fetch_row(res)) != NULL ) {
-                    cout <<"\n\t"<< ++i<<". ID: "<<row[0] << "Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
-                    Sleep(500);
-                }
-                cout << "Foram encontrados " << i << " resultado(s)";
-                getchar();
-            }
-
-        } else {
-            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            exit(1);
-        }
-        string nome;
-        cout<< "\nEditar usuário com a id:" <<id<<"\n";
-        cout<< "Editando o nome do hóspede:\n";
-
-        cout<< "Digite o novo nome do hóspede:";
-        cin>>nome;
-
-        mysql_select_db(servidor,"hoteldb");
-        if (mysql_errno(servidor)==0) {
-            string query = "UPDATE funcionario SET nome='"+(nome)+"' WHERE id = "+(id)+";";
-            mysql_query(servidor,query.c_str());
-
-            if (mysql_errno(servidor)==0) {
-                cout << "Hóspede editado com sucesso.\nPressione a tecla ENTER para continuar.";
-            }
-            getchar();
-        } else {
-            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            exit(1);
-        }
-
-        cout<<"\nPresssione ENTER para continuar";
-    }*/
-
     void excluirFuncionario(MYSQL *servidor) {
         int op;
         do {
