@@ -81,7 +81,7 @@ void verificarEstruturaBD() {
         exit(1);
     }
 
-     //Criando a estrutura da tabela de produtos
+    //Criando a estrutura da tabela de produtos
     mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, descricao VARCHAR(40), preco DECIMAL(6,2))");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela PRODUTO Criada com Sucesso!\n";
@@ -91,7 +91,7 @@ void verificarEstruturaBD() {
     }
 
     //criando a estrutura da tabela de hospedagem
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS hospedagem (id int PRIMARY KEY AUTO_INCREMENT, id_hospede int, id_suite int, id_funcionario int, data_entrada date, data_saida date, status varchar(20), conta_final DECIMAL(6,2), forma_pagamento varchar(10), senha varchar(6))");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS hospedagem (id int PRIMARY KEY AUTO_INCREMENT, id_hospede int, id_suite int, id_funcionario int, data_entrada date, data_saida date, conta_final DECIMAL(6,2), forma_pagamento varchar(10))");
     mysql_query(servidor, "ALTER TABLE hospedagem ADD FOREIGN KEY (id_hospede) REFERENCES hospede(id);");
     mysql_query(servidor, "ALTER TABLE hospedagem ADD FOREIGN KEY (id_suite) REFERENCES suite(id);");
     mysql_query(servidor, "ALTER TABLE hospedagem ADD FOREIGN KEY (id_funcionario) REFERENCES funcionario(id);");
@@ -104,9 +104,9 @@ void verificarEstruturaBD() {
     }
 
     //criando a estrutura da tabela de serviços
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS servicos (id int PRIMARY KEY AUTO_INCREMENT, id_hospedagem int, id_funcionario int, data_entrada date, data_saida date, status varchar(20), valor DECIMAL(6,2))");
-    mysql_query(servidor, "ALTER TABLE servicos ADD FOREIGN KEY (id_funcionario) REFERENCES funcionario(id);");
-    mysql_query(servidor, "ALTER TABLE servicos ADD FOREIGN KEY (id_hospedagem) REFERENCES hospedagem(id);");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS vendas (id int PRIMARY KEY AUTO_INCREMENT, id_hospedagem int, id_funcionario int, data_entrada date, data_saida date, status varchar(20), valor DECIMAL(6,2))");
+    mysql_query(servidor, "ALTER TABLE vendas ADD FOREIGN KEY (id_funcionario) REFERENCES funcionario(id);");
+    mysql_query(servidor, "ALTER TABLE vebndas ADD FOREIGN KEY (id_hospedagem) REFERENCES hospedagem(id);");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela SERVIÇO Criada com Sucesso!\n";
     } else {
@@ -194,15 +194,15 @@ void margemTela() {
     desenharRetangulo(119,29);
 }
 
-void carregar (){
+void carregar () {
     textcolor(4);
     desenharRetangulo2(35,3,40,13);
     gotoxy(41,14);
     textcolor(1);
     for (int i = 0; i<33; i++) {
-            Sleep(50);
-            printf("%c",219);
-        }
+        Sleep(50);
+        printf("%c",219);
+    }
 }
 
 void telaLogin() {
@@ -271,7 +271,7 @@ int main() {
     verificarEstruturaBD();
     setlocale(LC_ALL, "pt_BR_utf8");
     do {//Loop de tela de Login
-       if(!loginCHK) {
+        if(!loginCHK) {
             telaLogin();
             Sleep(500);
         }
@@ -672,33 +672,6 @@ int main() {
             case 4: { //SERVIÇOS
                 gotoxy(40,26);
                 cout << "                               ";
-                gotoxy(45,26);
-                textcolor(14);
-                carregar();
-                opMenu = 0;
-                break;
-            }
-            case 5: { //HOSPEDAGENS
-                gotoxy(40,26);
-                cout << "                               ";
-                gotoxy(45,26);
-                textcolor(14);
-                carregar();
-                opMenu = 0;
-                break;
-            }
-            case 6: { // RESERVA
-                gotoxy(40,26);
-                cout << "                               ";
-                gotoxy(45,26);
-                textcolor(14);
-                carregar();
-                opMenu = 0;
-                break;
-            }
-            case 7: { // PRODUTOS
-                gotoxy(40,26);
-                cout << "                               ";
                 carregar();
                 gotoxy(45,26);
                 textcolor(14);
@@ -805,13 +778,34 @@ int main() {
                 break;
 
             }
+            case 5: { //HOSPEDAGENS
+                gotoxy(40,26);
+                cout << "                               ";
+                gotoxy(45,26);
+                textcolor(14);
+                carregar();
+                opMenu = 0;
+                break;
+            }
+            case 6: { // RESERVA
+                gotoxy(40,26);
+                cout << "                               ";
+                gotoxy(45,26);
+                textcolor(14);
+                carregar();
+                opMenu = 0;
+                break;
+            }
+            case 7: { // PRODUTOS
+                break;
+            }
             case 8: {
                 gotoxy(40,26);
                 cout << "                               ";
                 gotoxy(45,26);
                 textcolor(14);
                 cout << "Fazendo Logoff";
-               carregar();
+                carregar();
                 loginCHK = false;
                 break;
             }

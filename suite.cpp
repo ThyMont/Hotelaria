@@ -651,7 +651,6 @@ public:
         mysql_query(servidor,query.c_str());
         MYSQL_RES* res = mysql_use_result(servidor);
         MYSQL_ROW row;
-        int i = 0;
         while( ( row = mysql_fetch_row(res)) != NULL ) {
             i++;
         }
