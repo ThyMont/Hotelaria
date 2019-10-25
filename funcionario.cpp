@@ -140,14 +140,6 @@ public:
         return nome;
     }
 
-
-    void cabecalho() {
-        cout<< " --- HOTEL DO FIM DO MUNDO ---\n";
-        cout<< "   Quintos dos Infernos, 666\n";
-        cout<< "   Telefone: (66) 66669-6969\n";
-        cout<< " -----------------------------\n\n";
-
-    }
     void cadastrarFuncionarioBD(MYSQL *servidor, string nome, string cpf, string celular, string telefone, string uf, string data_nascimento, string cidade, string nacionalidade, string salario ) {
         mysql_select_db(servidor,"hoteldb");
         if (mysql_errno(servidor)==0) {
@@ -165,6 +157,96 @@ public:
     }
 
     void cadastrarFuncionario(MYSQL *servidor) {
+
+        string nome, cpf, celular, telefone, uf, data_nascimento, cidade, nacionalidade, salario;
+        int confirmarCadastro; // Resposta de confirmação
+        do {
+            carregar();
+            system("CLS");
+            margemTela();
+            gotoxy(4,0);
+            textcolor(3);
+            gotoxy(40,3);
+            textcolor(15);
+            cout << "- - - -    CADASTRAR FUNCIONARIO    - - - -";
+            gotoxy(40,6);
+            textcolor(12);
+            cout << "    NOME: ";
+            gotoxy(40,7);
+            cout << "    CPF: ";
+            gotoxy(40,8);
+            cout << "    CELULAR: ";
+            gotoxy(40,9);
+            cout << "    TELEFONE: ";
+            gotoxy(40,10);
+            cout << "    DATA DE NASCIMENTO: ";
+            gotoxy(40,11);
+            cout << "    NACIONALIDADE: ";
+            gotoxy(40,12);
+            cout << "    CIDADE: ";
+            gotoxy(40,13);
+            cout << "    UF: ";
+            gotoxy(40,14);
+            cout << "    SALARIO: ";
+
+            textcolor(11);
+            gotoxy(50,6);
+            cin>>nome;
+            gotoxy(49,7);
+            cin>>cpf;
+            gotoxy(53,8);
+            cin>>celular;
+            gotoxy(54,9);
+            cin>>telefone;
+            gotoxy(64,10);
+            cin>>data_nascimento;
+            gotoxy(59,11);
+            cin>>nacionalidade;
+            gotoxy(52,12);
+            cin>>cidade;
+            gotoxy(48,13);
+            cin>>uf;
+            gotoxy(67,13);
+            cin>>salario;
+
+            do {
+                textcolor(13);
+                gotoxy(20,17);
+                cout<< "Voce confirma os dados acima?";
+                gotoxy(20,18);
+                cout<< "Digite 1 para CONFIRMAR, 2 para REINICIAR, 3 para CANCELAR CADASTRO:      ";
+                gotoxy(88,18);
+                cin>>confirmarCadastro;
+                switch (confirmarCadastro) {
+                case 1: {
+                    cadastrarFuncionarioBD(servidor, nome, cpf, celular, telefone, uf, data_nascimento, cidade, nacionalidade, salario);
+                    carregar();
+                    break;
+                }
+                case 2: {
+                    textcolor(10);
+                    gotoxy(40,19);
+                    cout<< "Reiniciando cadastro";
+                    carregar();
+                    break;
+                }
+                case 3: {
+                    textcolor(10);
+                    gotoxy(40,19);
+                    cout<<"Cadastro cancelado com sucesso!";
+                    gotoxy(40,20);
+                    cout << "Retornando ao menu de FUNCIONARIO";
+                    carregar();
+                    break;
+                }
+                default: {
+                    cout<<"\n\nOpção inválida. Tente novamente! \n\n Pressione ENTER para continuar";
+                }
+                }
+            } while ((confirmarCadastro<1 && confirmarCadastro > 3));
+        } while ((confirmarCadastro<1 && confirmarCadastro > 3)||confirmarCadastro == 2);
+
+        //ponto de corte
         string nome, cpf, celular, telefone, uf, data_nascimento, cidade, nacionalidade, salario;
         int confirma; // Resposta de confirmação
         do {

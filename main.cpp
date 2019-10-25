@@ -584,19 +584,16 @@ int main() {
                     cout << "    1 - CADASTRAR FUNCIONARIOS";
                     gotoxy(x,y++);
                     y++;
-                    cout << "    2 - LOCALIZAR FUNCIONARIOS POR NUMERO";
+                    cout << "    2 - LOCALIZAR FUNCIONARIOS POR NOME";
                     gotoxy(x,y++);
                     y++;
-                    cout << "    3 - LISTAR FUNCIONARIOS POR STATUS";
+                    cout << "    3 - EDITAR INFORMACOES DE FUNCIONARIO";
                     gotoxy(x,y++);
                     y++;
-                    cout << "    4 - EDITAR INFORMACOES DE FUNCIONARIO";
+                    cout << "    4 - DELETAR FUNCIONARIO";
                     gotoxy(x,y++);
                     y++;
-                    cout << "    5 - DELETAR FUNCIONARIO";
-                    gotoxy(x,y++);
-                    y++;
-                    cout << "    6 - VOLTAR AO MENU PRINCIPAL";
+                    cout << "    5 - VOLTAR AO MENU PRINCIPAL";
                     y++;
                     gotoxy(x,++y);
                     textcolor(1);
@@ -624,25 +621,19 @@ int main() {
                         opMenuFuncionario = 0;
                         break;
                     }
-                    case 3: { //Listar funcionarios por status
+                    case 3: { //EDITAR INFORMACOES DE Funcionario
                         funcionario f;
-                        f.listarPorStatus(servidor);
+                        f.editarFuncionario(servidor);
                         opMenuFuncionario = 0;
                         break;
                     }
-                    case 4: { //EDITAR INFORMACOES DE Funcionario
+                    case 4: { //DELETAR hospede
                         funcionario f;
-                        s.editarFuncionario(servidor);
+                        f.excluirFuncionario(servidor);
                         opMenuFuncionario = 0;
                         break;
                     }
-                    case 5: { //DELETAR hospede
-                        funcionario f;
-                        s.excluirFuncionario(servidor);
-                        opMenuFuncionario = 0;
-                        break;
-                    }
-                    case 6: {
+                    case 5: {
                         gotoxy(45,26);
                         textcolor(14);
                         cout << "Voltando ao menu principal";
@@ -660,7 +651,7 @@ int main() {
                     }
                     }
 
-                } while (opMenuFuncionario < 1 || opMenuFuncionario >6);
+                } while (opMenuFuncionario < 1 || opMenuFuncionario >5);
                 opMenu = 0;
                 break;
 
