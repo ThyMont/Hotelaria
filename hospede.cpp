@@ -88,16 +88,16 @@ private:
         desenharRetangulo(119,29);
     }
 
-    void carregar (){
-    textcolor(4);
-    desenharRetangulo2(35,3,40,13);
-    gotoxy(41,14);
-    textcolor(1);
-    for (int i = 0; i<33; i++) {
+    void carregar () {
+        textcolor(4);
+        desenharRetangulo2(35,3,40,13);
+        gotoxy(41,14);
+        textcolor(1);
+        for (int i = 0; i<33; i++) {
             Sleep(50);
             printf("%c",219);
         }
-}
+    }
 
 public:
 
@@ -386,36 +386,36 @@ public:
                 Sleep(500);
             }
 
-                if(i>0) {
-                    gotoxy(x,y+4);
-                    textcolor(13);
-                    cout << "Selecione a opcao a editar: ";
-                    gotoxy(x,y+5);
-                    cout << "1. NOME: ";
-                    gotoxy(x,y+6);
-                    cout << "2. CPF: ";
-                    gotoxy(x,y+7);
-                    cout << "3. CELULAR: ";
-                    gotoxy(x,y+8);
-                    cout << "4. TELEFONE: ";
-                    gotoxy(x,y+9);
-                    cout << "5. DATA DE NASCIMENTO: ";
-                    gotoxy(x,y+10);
-                    cout << "6. NACIONALIDADE: ";
-                    gotoxy(x,y+11);
-                    cout << "7. CIDADE: ";
-                    gotoxy(x,y+12);
-                    cout << "8. UF: ";
-                    gotoxy(x,y+13);
-                    cout << "9. CANCELAR ";
-                    gotoxy(x,y+14);
-                } else {
-                    textcolor(13);
-                    gotoxy(x,y+5);
-                    cout << "Digite 9 para CANCELAR ";
-                    gotoxy(x,y+6);
-                }
-                do {
+            if(i>0) {
+                gotoxy(x,y+4);
+                textcolor(13);
+                cout << "Selecione a opcao a editar: ";
+                gotoxy(x,y+5);
+                cout << "1. NOME: ";
+                gotoxy(x,y+6);
+                cout << "2. CPF: ";
+                gotoxy(x,y+7);
+                cout << "3. CELULAR: ";
+                gotoxy(x,y+8);
+                cout << "4. TELEFONE: ";
+                gotoxy(x,y+9);
+                cout << "5. DATA DE NASCIMENTO: ";
+                gotoxy(x,y+10);
+                cout << "6. NACIONALIDADE: ";
+                gotoxy(x,y+11);
+                cout << "7. CIDADE: ";
+                gotoxy(x,y+12);
+                cout << "8. UF: ";
+                gotoxy(x,y+13);
+                cout << "9. CANCELAR ";
+                gotoxy(x,y+14);
+            } else {
+                textcolor(13);
+                gotoxy(x,y+5);
+                cout << "Digite 9 para CANCELAR ";
+                gotoxy(x,y+6);
+            }
+            do {
                 cin>> op;
                 if (i>0) {
                     string editado;
@@ -584,7 +584,7 @@ public:
                         gotoxy(x,y+3);
                         textcolor(3);
                         cout << "Edicao cancelada! Voltando, aguarde ";
-                       carregar();
+                        carregar();
                         break;
                     }
                     default: {

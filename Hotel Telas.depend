@@ -69,7 +69,7 @@
 	<stdlib.h>
 	<string.h>
 
-1571958721 source:c:\users\papot\documents\git thymont\hotelaria\main.cpp
+1572013256 source:c:\users\papot\documents\git thymont\hotelaria\main.cpp
 	<iostream>
 	<conio.h>
 	<locale.h>
@@ -79,9 +79,10 @@
 	<windows.h>
 	"funcionario.cpp"
 	"hospede.cpp"
+	"suite.cpp"
 	<mysql.h>
 
-1571971478 c:\users\papot\documents\git thymont\hotelaria\funcionario.cpp
+1572013998 c:\users\papot\documents\git thymont\hotelaria\funcionario.cpp
 	<iostream>
 	<mysql.h>
 	<windows.h>
@@ -89,7 +90,7 @@
 	<stdlib.h>
 	<string.h>
 
-1572011755 source:c:\users\papot\documents\git thymont\hotelaria\hospede.cpp
+1572013964 source:c:\users\papot\documents\git thymont\hotelaria\hospede.cpp
 	<iostream>
 	<mysql.h>
 	<windows.h>
@@ -97,7 +98,7 @@
 	<stdlib.h>
 	<string.h>
 
-1571971478 c:\users\papot\documents\git thymont\hotelaria\hospede.cpp
+1572013964 c:\users\papot\documents\git thymont\hotelaria\hospede.cpp
 	<iostream>
 	<mysql.h>
 	<windows.h>
@@ -106,6 +107,14 @@
 	<string.h>
 
 1572006608 source:c:\users\papot\documents\git thymont\hotelaria\suite.cpp
+	<iostream>
+	<mysql.h>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1572006608 c:\users\papot\documents\git thymont\hotelaria\suite.cpp
 	<iostream>
 	<mysql.h>
 	<windows.h>
