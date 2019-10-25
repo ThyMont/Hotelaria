@@ -92,10 +92,9 @@ void verificarEstruturaBD() {
     }
 
     //criando a estrutura da tabela de hospedagem
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS hospedagem (id int PRIMARY KEY AUTO_INCREMENT, id_hospede int, id_suite int, id_funcionario int, data_entrada date, data_saida date, conta_final DECIMAL(6,2), forma_pagamento varchar(10))");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS hospedagem (id int PRIMARY KEY AUTO_INCREMENT, id_hospede int, id_suite int, data_entrada date, data_saida date, conta_final DECIMAL(6,2), forma_pagamento varchar(10))");
     mysql_query(servidor, "ALTER TABLE hospedagem ADD FOREIGN KEY (id_hospede) REFERENCES hospede(id);");
     mysql_query(servidor, "ALTER TABLE hospedagem ADD FOREIGN KEY (id_suite) REFERENCES suite(id);");
-    mysql_query(servidor, "ALTER TABLE hospedagem ADD FOREIGN KEY (id_funcionario) REFERENCES funcionario(id);");
 
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela HOSPEDAGEM Criada com Sucesso!\n";

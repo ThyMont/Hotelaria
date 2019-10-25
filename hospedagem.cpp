@@ -101,4 +101,74 @@ private:
 
 public:
 
+    void cadastrarHospedagemBD(MYSQL *servidor, string idHospede, string idSuite, string dataEntrada){
+
+    }
+
+    void cadastrarHospedagem (MYSQL *servidor){
+            string idHospede, idSuite, dataEntrada;
+            int confirmarCadastro;
+            do{
+                    carregar();
+            system("CLS");
+            margemTela();
+            gotoxy(4,0);
+            textcolor(3);
+            gotoxy(40,3);
+            textcolor(15);
+            cout << "- - - -    CADASTRAR HOSPEDAGEM    - - - -";
+            gotoxy(40,6);
+            textcolor(12);
+            cout << "    ID HOSPEDE: ";
+            gotoxy(40,7);
+            cout << "    ID SUITE: ";
+            gotoxy(40,8);
+            cout << "    DATA DE ENTRADA: ";
+            gotoxy(40,9);
+
+            textcolor(11);
+            gotoxy(56,6);
+            cin>>idHospede;
+            gotoxy(52,7);
+            cin>>idSuite;
+            gotoxy(61,8);
+            cin>>dataEntrada;
+
+            do {
+                textcolor(13);
+                gotoxy(20,17);
+                cout<< "Voce confirma os dados acima?";
+                gotoxy(20,18);
+                cout<< "Digite 1 para CONFIRMAR, 2 para REINICIAR, 3 para CANCELAR CADASTRO:      ";
+                gotoxy(88,18);
+                cin>>confirmarCadastro;
+                switch (confirmarCadastro) {
+                case 1: {
+                    cadastrarHospedagemBD(servidor, idHospede, idSuite, dataEntrada);
+                    carregar();
+                    break;
+                }
+                case 2: {
+                    textcolor(10);
+                    gotoxy(40,19);
+                    cout<< "Reiniciando cadastro";
+                    carregar();
+                    break;
+                }
+                case 3: {
+                    textcolor(10);
+                    gotoxy(40,19);
+                    cout<<"Cadastro cancelado com sucesso!";
+                    gotoxy(40,20);
+                    cout << "Retornando ao menu de FUNCIONARIO";
+                    carregar();
+                    break;
+                }
+                default: {
+                    cout<<"\n\nOpção inválida. Tente novamente! \n\n Pressione ENTER para continuar";
+                }
+                }
+            } while ((confirmarCadastro<1 && confirmarCadastro > 3));
+        } while ((confirmarCadastro<1 && confirmarCadastro > 3)||confirmarCadastro == 2);
+    }
 };
