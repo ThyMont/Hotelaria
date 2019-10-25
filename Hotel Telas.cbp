@@ -39,6 +39,7 @@
 		<Unit filename="funcionario.cpp" />
 		<Unit filename="hospede.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="suite.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

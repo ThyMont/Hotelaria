@@ -187,16 +187,14 @@ public:
                 switch (confirmarCadastro) {
                 case 1: {
                     cadastrarHospedeBD(servidor, nome, cpf, celular, telefone, data_nascimento, nacionalidade, cidade, uf);
+                    carregar();
                     break;
                 }
                 case 2: {
                     textcolor(10);
                     gotoxy(40,19);
                     cout<< "Reiniciando cadastro";
-                    for(int i = 0; i<5; i++) {
-                        cout<<".";
-                        Sleep(500);;
-                    }
+                    carregar();
                     break;
                 }
                 case 3: {
@@ -205,10 +203,7 @@ public:
                     cout<<"Cadastro cancelado com sucesso!";
                     gotoxy(40,20);
                     cout << "Retornando ao menu de HOSPEDE";
-                    for(int i = 0; i<5; i++) {
-                        cout<<".";
-                        Sleep(500);
-                    }
+                    carregar();
                     break;
                 }
                 default: {
@@ -421,6 +416,7 @@ public:
                     textcolor(13);
                     gotoxy(x,y+5);
                     cout << "Digite 9 para CANCELAR ";
+                    gotoxy(x,y+6);
                 }
                 do {
                 cin>> op;
@@ -600,11 +596,7 @@ public:
                     default: {
                         gotoxy(x,y+3);
                         textcolor(3);
-                        cout << "Opção inválida! Tente novamente ";
-                        for(int i = 1; i<5; i++) {
-                            Sleep(500);
-                            cout << ".";
-                        }
+                        cout << "Opçao invalida! Tente novamente:  ";
                         break;
                     }
 
@@ -615,19 +607,14 @@ public:
                         gotoxy(x,y+3);
                         textcolor(3);
                         cout << "Edicao cancelada! Voltando, aguarde ";
-                        for(int i = 1; i<5; i++) {
-                            Sleep(500);
-                            cout << ".";
-                        }
+                        carregar();
+                        break;
                     }
                     default: {
                         gotoxy(x,y+3);
                         textcolor(3);
-                        cout << "Opção inválida! Tente novamente ";
-                        for(int i = 1; i<5; i++) {
-                            Sleep(500);
-                            cout << ".";
-                        }
+                        cout << "Opção invalida! Tente novamente ";
+
                         break;
                     }
                     }
