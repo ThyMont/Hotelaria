@@ -584,10 +584,7 @@ public:
                         gotoxy(x,y+3);
                         textcolor(3);
                         cout << "Edicao cancelada! Voltando, aguarde ";
-                        for(int i = 1; i<5; i++) {
-                            Sleep(500);
-                            cout << ".";
-                        }
+                       carregar();
                         break;
                     }
                     default: {

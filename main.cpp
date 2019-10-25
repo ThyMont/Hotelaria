@@ -519,19 +519,19 @@ int main() {
                     case 3: { //Listar suites por status
                         suite s;
                         s.listarPorStatus(servidor);
-                        opMenuHospede = 0;
+                        opMenuSuite = 0;
                         break;
                     }
                     case 4: { //EDITAR INFORMACOES DE Suite
                         suite s;
                         s.editarSuite(servidor);
-                        opMenuHospede = 0;
+                        opMenuSuite = 0;
                         break;
                     }
                     case 5: { //DELETAR hospede
                         suite s;
                         s.excluirSuite(servidor);
-                        opMenuHospede = 0;
+                        opMenuSuite = 0;
                         break;
                     }
                     case 6: {

@@ -194,10 +194,10 @@ public:
         } while ((confirmarCadastro<1 && confirmarCadastro > 3)||confirmarCadastro == 2);
     }
 
-void procurarPorNumeroBD(MYSQL *servidor, string numero) {
+    void procurarPorNumeroBD(MYSQL *servidor, string numero) {
         mysql_select_db(servidor,"hoteldb");
         if (mysql_errno(servidor)==0) {
-            string query = "SELECT * from hospede WHERE numero LIKE \'%%"+numero+"%%\';";
+            string query = "SELECT * from suite WHERE numero LIKE \'%%"+numero+"%%\';";
             mysql_query(servidor,query.c_str());
             gotoxy(40,11);
             textcolor(6);
@@ -260,5 +260,387 @@ void procurarPorNumeroBD(MYSQL *servidor, string numero) {
 
             cin>> op;
         } while(op!=1);
+        carregar();
+    }
+
+    void listarPorStatus(MYSQL *servidor) {
+        system("CLS");
+        margemTela();
+        gotoxy(4,0);
+        textcolor(3);
+        gotoxy(40,3);
+        textcolor(15);
+        cout << "- - - -     LISTAR SUITES POR STATUS    - - - -";
+
+        mysql_select_db(servidor,"hoteldb");
+        if (mysql_errno(servidor)==0) {
+            string query = "SELECT id, numero, vagas, preco from suite ORDER BY uf;";
+            mysql_query(servidor,query.c_str());
+            gotoxy(40,6);
+            textcolor(6);
+            cout << "Pesquisando";
+            for(int i = 1; i<5; i++) {
+                Sleep(500);
+                cout << ".";
+            }
+
+            if (mysql_errno(servidor)==0) {
+                int x = 35, y = 8;
+                gotoxy(40,7);
+                textcolor(14);
+                cout << "Pesquisa realizada com sucesso!";
+                Sleep(1);
+                MYSQL_RES* res = mysql_use_result(servidor);
+                MYSQL_ROW row;
+                int i = 0;
+                textcolor(15);
+                while( ( row = mysql_fetch_row(res)) != NULL ) {
+                    gotoxy(x,y++);
+                    cout << ++i<<". ID: "<<row[0] << "\tNumero: "<< row[1] <<"\tVagas: "<< row[2] <<"\tPreco: "<< row[3] << endl;
+                    Sleep(500);
+                }
+                y++;
+                gotoxy(x,++y);
+                textcolor(13);
+                cout << "Foram encontrados " << i << " resultado(s)";
+
+                gotoxy(x,y+2);
+                textcolor(5);
+                cout << "Pressione ENTER para continuar";
+            }
+        } else {
+            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+            exit(1);
+        }
+        getchar();
+        carregar();
+    }
+
+    void editarSuite(MYSQL *servidor) {
+        int op;
+        system("CLS");
+        margemTela();
+        gotoxy(4,0);
+        textcolor(3);
+        gotoxy(10,3);
+        textcolor(15);
+        cout << "- - - -     EDITAR SUITE     - - - -";
+        gotoxy(10,5);
+        textcolor(12);
+        cout << "INFORME A ID DA SUITE: ";
+        textcolor(11);
+        gotoxy(10,7);
+        string id;
+        cin>>id;
+
+        string query = "SELECT * WHERE id LIKE '%"+id+"%';";
+        mysql_query(servidor,query.c_str());
+        gotoxy(10,9);
+        textcolor(6);
+        cout << "Aguarde";
+        for(int i = 1; i<5; i++) {
+            Sleep(500);
+            cout << ".";
+        }
+
+        if (mysql_errno(servidor)==0) {
+            int x = 10, y = 10;
+            MYSQL_RES* res = mysql_use_result(servidor);
+            MYSQL_ROW row;
+            int i = 0;
+            textcolor(15);
+            while( ( row = mysql_fetch_row(res)) != NULL ) {
+                gotoxy(x,y++);
+                cout << ++i<<". ID: "<<row[0] << "\tNumero: "<< row[1] <<"\tVagas: "<< row[2] <<"\tPreco: "<< row[3] << endl;
+                Sleep(500);
+            }
+
+            if(i>0) {
+                gotoxy(x,y+4);
+                textcolor(13);
+                cout << "Selecione a opcao a editar: ";
+                gotoxy(x,y+5);
+                cout << "1. NUMERO: ";
+                gotoxy(x,y+6);
+                cout << "2. VAGAS: ";
+                gotoxy(x,y+7);
+                cout << "3. PRECO: ";
+                gotoxy(x,y+8);
+                cout << "4. STATUS: ";
+                gotoxy(x,y+9);
+                cout << "5. CANCELAR ";
+                gotoxy(x,y+14);
+            } else {
+                textcolor(13);
+                gotoxy(x,y+5);
+                cout << "Digite 5 para CANCELAR ";
+                gotoxy(x,y+6);
+            }
+            do {
+                cin>> op;
+                if (i>0) {
+                    string editado;
+                    switch (op) {
+                    case 1: {
+                        gotoxy(x,++y);
+                        cout << "Digite o novo NUMERO: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE suite SET numero='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Suite editado com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 2: {
+                        gotoxy(x,++y);
+                        cout << "Digite a nova quantidade de VAGAS: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE suite SET vagas='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Suite editada com sucesso.\nPressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 3: {
+                        gotoxy(x,++y);
+                        cout << "Digite o novo preco: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE suite SET preco='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Suite editada com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 4: {
+                        gotoxy(x,++y);
+                        cout << "Digite o novo status: ";
+                        cin >> editado;
+                        mysql_select_db(servidor,"hoteldb");
+                        if (mysql_errno(servidor)==0) {
+                            string query = "UPDATE suite SET telefone='"+(editado)+"' WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Suite editada com sucesso. Pressione a tecla ENTER para continuar.";
+                            }
+                            getchar();
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"Erro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 5: {
+                        gotoxy(x,y+3);
+                        textcolor(3);
+                        cout << "Edicao cancelada! Voltando, aguarde ";
+                        carregar();
+                        break;
+                    }
+                    default: {
+                        gotoxy(x,y+3);
+                        textcolor(3);
+                        cout << "Opçao invalida! Tente novamente:  ";
+                        break;
+                    }
+
+                    }
+                } else {
+                    switch (op) {
+                    case 5: {
+                        gotoxy(x,y+3);
+                        textcolor(3);
+                        cout << "Edicao cancelada! Voltando, aguarde ";
+                        carregar();
+                        break;
+                    }
+                    default: {
+                        gotoxy(x,y+3);
+                        textcolor(3);
+                        cout << "Opção invalida! Tente novamente ";
+                        break;
+                    }
+                    }
+                }
+            } while(op<1||op>5);
+        }
+    }
+
+    void excluirSuite(MYSQL *servidor) {
+        int op;
+        do {
+            system("CLS");
+            margemTela();
+            gotoxy(4,0);
+            textcolor(3);
+            gotoxy(10,3);
+            textcolor(15);
+            cout << "- - - -     EXCLUIR SUITE     - - - -";
+            gotoxy(10,5);
+            textcolor(12);
+            cout << "INFORME A ID DA SUITE: ";
+            textcolor(11);
+            gotoxy(10,7);
+            string id;
+            cin>>id;
+
+            string query = "SELECT * from suite WHERE id LIKE '%"+id+"%';";
+            mysql_query(servidor,query.c_str());
+            gotoxy(10,9);
+            textcolor(6);
+            cout << "Aguarde";
+            for(int i = 1; i<5; i++) {
+                Sleep(500);
+                cout << ".";
+            }
+
+            if (mysql_errno(servidor)==0) {
+                int x = 10, y = 10;
+                MYSQL_RES* res = mysql_use_result(servidor);
+                MYSQL_ROW row;
+                int i = 0;
+                textcolor(15);
+                while( ( row = mysql_fetch_row(res)) != NULL ) {
+                    gotoxy(x,y++);
+                    cout << ++i<<". ID: "<<row[0] << "\tNumero: "<< row[1] <<"\tVagas: "<< row[2] <<"\tPreco: "<< row[3] << endl;
+                    Sleep(500);
+                }
+                if(i>0) {
+                    gotoxy(x,++y);
+                    textcolor(13);
+                    cout << "SELECIONE A OPÇÃO DESEJADA: ";
+                    gotoxy(x,++y);
+                    cout << "1. EXCLUIR SUITE: ";
+                    gotoxy(x,++y);
+                    cout << "2. PROCURAR NOVAMENTE: ";
+                    gotoxy(x,++y);
+                    cout << "3. CANCELAR: ";
+
+                } else {
+                    gotoxy(x,++y);
+                    textcolor(13);
+                    cout << "SELECIONE A OPÇÃO DESEJADA: ";
+                    gotoxy(x,++y);
+                    cout << "2. PROCURAR NOVAMENTE: ";
+                    gotoxy(x,++y);
+                    cout << "3. CANCELAR: ";
+                }
+                gotoxy(x,++y);
+                cin>> op;
+
+                if (i>0) {
+                    switch (op) {
+                    case 1: {
+                        if (mysql_errno(servidor)==0) {
+                            string query = "DELETE FROM suite WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Suite excluida com sucesso. Aguarde para continuar.";
+                                for(int i = 1; i<5; i++) {
+                                    Sleep(500);
+                                    cout << ".";
+                                }
+                            }
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 2: {
+                        gotoxy(x,++y);
+                        cout << "Reiniciando a pesquisa. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    case 3: {
+                        gotoxy(x,++y);
+                        cout << "Cancelando a exclusão. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    default: {
+                        gotoxy(x,++y);
+                        cout << "Opção inválida. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    }
+                } else {
+                    switch (op) {
+                    case 2: {
+                        gotoxy(x,++y);
+                        cout << "Reiniciando a pesquisa. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    case 3: {
+                        gotoxy(x,++y);
+                        cout << "Reiniciando a pesquisa. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    default: {
+                        gotoxy(x,++y);
+                        cout << "Opção inválida. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    }
+                }
+            }
+        } while (op!=3&&op!=1);
     }
 };
