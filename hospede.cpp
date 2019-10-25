@@ -88,6 +88,17 @@ private:
         desenharRetangulo(119,29);
     }
 
+    void carregar (){
+    textcolor(4);
+    desenharRetangulo2(35,3,40,13);
+    gotoxy(41,14);
+    textcolor(1);
+    for (int i = 0; i<33; i++) {
+            Sleep(50);
+            printf("%c",219);
+        }
+}
+
 public:
 
     void cadastrarHospedeBD(MYSQL *servidor, string nome, string cpf, string celular, string telefone, string data_nascimento, string nacionalidade, string cidade, string uf ) {
@@ -120,6 +131,7 @@ public:
         string nome, cpf, celular, telefone, data_nascimento, nacionalidade, cidade, uf ;
         int confirmarCadastro; // Resposta de confirmação
         do {
+            carregar();
             system("CLS");
             margemTela();
             gotoxy(4,0);
@@ -383,30 +395,31 @@ public:
             }
 
                 if(i>0) {
-                    gotoxy(x,++y);
+                    gotoxy(x,y+4);
                     textcolor(13);
                     cout << "Selecione a opcao a editar: ";
-                    gotoxy(x,++y);
+                    gotoxy(x,y+5);
                     cout << "1. NOME: ";
-                    gotoxy(x,++y);
+                    gotoxy(x,y+6);
                     cout << "2. CPF: ";
-                    gotoxy(x,++y);
+                    gotoxy(x,y+7);
                     cout << "3. CELULAR: ";
-                    gotoxy(x,++y);
+                    gotoxy(x,y+8);
                     cout << "4. TELEFONE: ";
-                    gotoxy(x,++y);
+                    gotoxy(x,y+9);
                     cout << "5. DATA DE NASCIMENTO: ";
-                    gotoxy(x,++y);
+                    gotoxy(x,y+10);
                     cout << "6. NACIONALIDADE: ";
-                    gotoxy(x,++y);
+                    gotoxy(x,y+11);
                     cout << "7. CIDADE: ";
-                    gotoxy(x,++y);
+                    gotoxy(x,y+12);
                     cout << "8. UF: ";
-                    gotoxy(x,++y);
+                    gotoxy(x,y+13);
                     cout << "9. CANCELAR ";
-                    gotoxy(x,y+2);
+                    gotoxy(x,y+14);
                 } else {
-                    gotoxy(x,++y);
+                    textcolor(13);
+                    gotoxy(x,y+5);
                     cout << "Digite 9 para CANCELAR ";
                 }
                 do {

@@ -185,14 +185,13 @@ void margemTela() {
 
 void carregar (){
     textcolor(4);
-    desenharRetangulo2(40,3,40,13);
+    desenharRetangulo2(35,3,40,13);
     gotoxy(41,14);
     textcolor(1);
-    for (int i = 0; i<38; i++) {
+    for (int i = 0; i<33; i++) {
             Sleep(50);
             printf("%c",219);
         }
-
 }
 
 void telaLogin() {
@@ -228,7 +227,7 @@ void telaLogin() {
         gotoxy(47, 17);
         printf("        ");
         for (int i = 0; i<5; i++) {
-            Sleep(500);
+            Sleep(300);
             cout <<".";
         }
 
@@ -246,11 +245,7 @@ void telaLogin() {
             gotoxy(47, 16);
             printf("  LOGIN E SENHA CORRETOS ");
             gotoxy(47, 17);
-            printf("        AGUARDE");
-            for (int i = 0; i<3; i++) {
-                Sleep(500);
-                cout <<".";
-            }
+            carregar();
             loginCHK = true;
             usuarioAtivoID = f.salvarIDUsuario(servidor, login, senha);
             nomeUsuarioAtivo = login;
@@ -329,19 +324,14 @@ int main() {
             case 1: { // Hóspedes
                 gotoxy(40,26);
                 cout << "                               ";
+                carregar();
                 gotoxy(45,26);
                 textcolor(14);
-                cout << "HOSPEDES";
-                /*for (int i = 0; i<3; i++) {
-                    Sleep(500);
-                    cout <<".";
-                }*/
 
                 int opMenuHospede;
                 bool erroHospede  = false;
 
                 do {
-                    carregar();
                     system("CLS");
                     margemTela();
                     gotoxy(4,0);
@@ -468,11 +458,7 @@ int main() {
                 cout << "                               ";
                 gotoxy(45,26);
                 textcolor(14);
-                cout << "SUITES";
-                for (int i = 0; i<3; i++) {
-                    Sleep(500);
-                    cout <<".";
-                }
+                carregar();
                 opMenu = 0;
                 break;
             }
@@ -481,11 +467,7 @@ int main() {
                 cout << "                               ";
                 gotoxy(45,26);
                 textcolor(14);
-                cout << "FUNCIONARIOS";
-                for (int i = 0; i<3; i++) {
-                    Sleep(500);
-                    cout <<".";
-                }
+                carregar();
                 opMenu = 0;
                 break;
             }
@@ -494,11 +476,7 @@ int main() {
                 cout << "                               ";
                 gotoxy(45,26);
                 textcolor(14);
-                cout << "FUNCIONARIOS";
-                for (int i = 0; i<3; i++) {
-                    Sleep(500);
-                    cout <<".";
-                }
+                carregar();
                 opMenu = 0;
                 break;
             }
@@ -507,11 +485,7 @@ int main() {
                 cout << "                               ";
                 gotoxy(45,26);
                 textcolor(14);
-                cout << "FUNCIONARIOS";
-                for (int i = 0; i<3; i++) {
-                    Sleep(500);
-                    cout <<".";
-                }
+                carregar();
                 opMenu = 0;
                 break;
             }
@@ -520,11 +494,7 @@ int main() {
                 cout << "                               ";
                 gotoxy(45,26);
                 textcolor(14);
-                cout << "FUNCIONARIOS";
-                for (int i = 0; i<3; i++) {
-                    Sleep(500);
-                    cout <<".";
-                }
+                carregar();
                 opMenu = 0;
                 break;
             }
@@ -534,10 +504,7 @@ int main() {
                 gotoxy(45,26);
                 textcolor(14);
                 cout << "Fazendo Logoff";
-                for (int i = 0; i<5; i++) {
-                    Sleep(500);
-                    cout <<".";
-                }
+               carregar();
                 loginCHK = false;
                 break;
             }
@@ -547,10 +514,7 @@ int main() {
                 gotoxy(45,26);
                 textcolor(14);
                 cout << "Saindo do programa";
-                for (int i = 0; i<5; i++) {
-                    Sleep(500);
-                    cout <<".";
-                }
+                carregar();
                 gotoxy(0,29);
                 exit(1);
                 break;
