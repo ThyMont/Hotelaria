@@ -89,7 +89,7 @@
 	<stdlib.h>
 	<string.h>
 
-1572006188 source:c:\users\papot\documents\git thymont\hotelaria\hospede.cpp
+1572011755 source:c:\users\papot\documents\git thymont\hotelaria\hospede.cpp
 	<iostream>
 	<mysql.h>
 	<windows.h>
@@ -105,7 +105,7 @@
 	<stdlib.h>
 	<string.h>
 
-1571973561 source:c:\users\papot\documents\git thymont\hotelaria\suite.cpp
+1572006608 source:c:\users\papot\documents\git thymont\hotelaria\suite.cpp
 	<iostream>
 	<mysql.h>
 	<windows.h>

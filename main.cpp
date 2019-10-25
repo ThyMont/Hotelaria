@@ -615,9 +615,9 @@ int main() {
                         opMenuFuncionario = 0;
                         break;
                     }
-                    case 2: { //LOCALIZAR FUNCIONARIO por numero
+                    case 2: { //LOCALIZAR FUNCIONARIO por NOME
                         funcionario f;
-                        f.localizarPorNumero(servidor);
+                        f.localizarPorNome(servidor);
                         opMenuFuncionario = 0;
                         break;
                     }
