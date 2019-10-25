@@ -113,10 +113,7 @@ public:
                 cout << "Hospede cadastrado com sucesso.";
                 gotoxy(40,21);
                 cout << "Retornando ao menu de HOSPEDE";
-                for(int i = 0; i<5; i++) {
-                    cout<<".";
-                    Sleep(500);
-                }
+                carregar();
             }
             getchar();
         } else {
