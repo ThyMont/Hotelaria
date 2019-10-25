@@ -373,153 +373,154 @@ public:
         cout<<"\nPresssione ENTER para continuar";
     }
 
-
     void excluirFuncionario(MYSQL *servidor) {
-        system("CLS");
-        mysql_select_db(servidor,"hoteldb");
-        string id;
-        if (mysql_errno(servidor)==0) {
-            cout << "---  EXCLUIR Hóspede  ---\n";
-            cout << "\n\nDigite a ID do hóspede a ser excluído: ";
-            cin >> id;
-            string query = "SELECT id, nome,cpf from funcionario WHERE id LIKE '%"+id+"%';";
-            mysql_query(servidor,query.c_str());
-
-            cout << "Aguarde";
-            for(int i = 1; i<10; i++) {
-                Sleep(500);
-                cout << ".";
-            }
-
-            if (mysql_errno(servidor)==0) {
-                cout << "\nPronto!\n";
-                Sleep(1);
-                MYSQL_RES* res = mysql_use_result(servidor);
-                MYSQL_ROW row;
-                int i = 0;
-                while( ( row = mysql_fetch_row(res)) != NULL ) {
-                    cout <<"\n\t"<< ++i<<". ID: "<<row[0] << "Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
-                    Sleep(500);
-                }
-                cout << "Foram encontrados " << i << " resultado(s)";
-                getchar();
-            }
-
-        } else {
-            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            exit(1);
-        }
-        string nome;
-        cout<< "\nExcluir usuário com a id:" <<id<<"\n";
-        cout<< "Confirma a exclusão?\n";
-
-        cout<< "Digite o novo nome do hóspede:";
-        cin>>nome;
-
-        mysql_select_db(servidor,"hoteldb");
-        if (mysql_errno(servidor)==0) {
-            string query = "UPDATE funcionario SET nome='"+(nome)+"' WHERE id = "+(id)+";";
-            mysql_query(servidor,query.c_str());
-
-            if (mysql_errno(servidor)==0) {
-                cout << "Hóspede editado com sucesso.\nPressione a tecla ENTER para continuar.";
-            }
-            getchar();
-        } else {
-            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            exit(1);
-        }
-    }
-
-    void contarFuncionarios(MYSQL *servidor) {
-        system("CLS");
-        cout << "---  Contagem total de hóspedes  ---\n";
-        mysql_select_db(servidor,"hoteldb");
-        if (mysql_errno(servidor)==0) {
-            string query = "SELECT COUNT(*) FROM funcionario;";
-            mysql_query(servidor,query.c_str());
-
-            cout << "Contando";
-            for(int i = 1; i<10; i++) {
-                Sleep(500);
-                cout << ".";
-            }
-        }
-
-        if (mysql_errno(servidor)==0) {
-            cout << "\nPronto!\n";
-            Sleep(1);
-            MYSQL_RES* res = mysql_use_result(servidor);
-            MYSQL_ROW row;
-            while( ( row = mysql_fetch_row(res)) != NULL ) {
-                cout <<" Total de hóspedes cadastrados: "<<row[0] <<  endl;
-            }
-
-            cout<< "Pressione ENTER para continuar";
-            getchar();
-        }
-    }
-
-    void listarporUF(MYSQL *servidor) {
-        mysql_select_db(servidor,"hoteldb");
-        if (mysql_errno(servidor)==0) {
+        int op;
+        do {
             system("CLS");
-            cout << "---  Listando hóspedes por UF  ---\n";
+            margemTela();
+            gotoxy(4,0);
+            textcolor(3);
+            gotoxy(10,3);
+            textcolor(15);
+            cout << "- - - -     EXCLUIR FUNCIONARIO     - - - -";
+            gotoxy(10,5);
+            textcolor(12);
+            cout << "INFORME A ID DO FUNCIONARIO: ";
+            textcolor(11);
+            gotoxy(10,7);
+            string id;
+            cin>>id;
 
-            string query = "SELECT id, nome, uf from funcionario ORDER BY uf;";
+            string query = "SELECT id, nome, cpf, celular, telefone, uf, data_nascimento, cidade, nacionalidade, salario from funcionario WHERE id LIKE '%"+id+"%';";
             mysql_query(servidor,query.c_str());
-
-            cout << "\nListando";
-            for(int i = 1; i<10; i++) {
+            gotoxy(10,9);
+            textcolor(6);
+            cout << "Aguarde";
+            for(int i = 1; i<5; i++) {
                 Sleep(500);
                 cout << ".";
             }
 
             if (mysql_errno(servidor)==0) {
-                cout << "\nPesquisa realizada com sucesso!\n";
-                Sleep(1);
+                int x = 10, y = 10;
                 MYSQL_RES* res = mysql_use_result(servidor);
                 MYSQL_ROW row;
                 int i = 0;
+                textcolor(15);
                 while( ( row = mysql_fetch_row(res)) != NULL ) {
-                    cout <<"\n\t"<< ++i<<". ID: "<<row[0] << " Nome: "<< row[1] <<"\t UF: "<< row[2] << endl;
+                    gotoxy(x,y++);
+                    cout << ++i<< ". ID: " << row[0] << " Nome: " << row[1] <<" CPF: "<< row[2] << " Celular: "<< row[3]<< endl;
+                    gotoxy(x+4,y++);
+                    cout  << "Telefone: " << row[4] << "UF: " << row[5] << "DN: " << row[6] << "Cidade: " << row[7]<< endl;
+                    gotoxy(x+4,y++);
+                    cout  << "nacionalidade: " <<row[8] << " Salario: " <<row[8]<<endl;
                     Sleep(500);
-                    getchar();
                 }
-                cout << "Foram encontrados " << i << " resultado(s)";
-                getchar();
+                if(i>0) {
+                    gotoxy(x,++y);
+                    textcolor(13);
+                    cout << "SELECIONE A OPÇÃO DESEJADA: ";
+                    gotoxy(x,++y);
+                    cout << "1. EXCLUIR FUNCIONARIO: ";
+                    gotoxy(x,++y);
+                    cout << "2. PROCURAR NOVAMENTE: ";
+                    gotoxy(x,++y);
+                    cout << "3. CANCELAR: ";
+
+                } else {
+                    gotoxy(x,++y);
+                    textcolor(13);
+                    cout << "SELECIONE A OPÇÃO DESEJADA: ";
+                    gotoxy(x,++y);
+                    cout << "2. PROCURAR NOVAMENTE: ";
+                    gotoxy(x,++y);
+                    cout << "3. CANCELAR: ";
+                }
+                gotoxy(x,++y);
+                cin>> op;
+
+                if (i>0) {
+                    switch (op) {
+                    case 1: {
+                        if (mysql_errno(servidor)==0) {
+                            string query = "DELETE FROM funcionario WHERE id = "+(id)+";";
+                            mysql_query(servidor,query.c_str());
+
+                            if (mysql_errno(servidor)==0) {
+                                gotoxy(x,++y);
+                                cout << "Funcionario excluido com sucesso. Aguarde para continuar.";
+                                for(int i = 1; i<5; i++) {
+                                    Sleep(500);
+                                    cout << ".";
+                                }
+                            }
+                        } else {
+                            gotoxy(x,++y);
+                            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+                            exit(1);
+                        }
+                        break;
+                    }
+                    case 2: {
+                        gotoxy(x,++y);
+                        cout << "Reiniciando a pesquisa. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    case 3: {
+                        gotoxy(x,++y);
+                        cout << "Cancelando a exclusão. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    default: {
+                        gotoxy(x,++y);
+                        cout << "Opção inválida. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    }
+                } else {
+                    switch (op) {
+                    case 2: {
+                        gotoxy(x,++y);
+                        cout << "Reiniciando a pesquisa. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    case 3: {
+                        gotoxy(x,++y);
+                        cout << "Reiniciando a pesquisa. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    default: {
+                        gotoxy(x,++y);
+                        cout << "Opção inválida. Aguarde para continuar.";
+                        for(int i = 1; i<5; i++) {
+                            Sleep(500);
+                            cout << ".";
+                        }
+                        break;
+                    }
+                    }
+                }
             }
-        } else {
-            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
-            exit(1);
-        }
-
-        cout<<"\nPresssione ENTER para continuar";
-        getchar();
+        } while (op!=3&&op!=1);
     }
-
-    void verificarCadastros(MYSQL *servidor) {
-
-        mysql_select_db(servidor,"hoteldb");
-        if (mysql_errno(servidor)==0) {
-            string query = "SELECT COUNT(*) FROM funcionario;";
-            mysql_query(servidor,query.c_str());
-        }
-        int i;
-        if (mysql_errno(servidor)==0) {
-            MYSQL_RES* res = mysql_use_result(servidor);
-            MYSQL_ROW row;
-            while( ( row = mysql_fetch_row(res)) != NULL ) {
-                cout<< row;
-                i = (int)row[0]-48;
-            }
-        }
-        cout << i;
-        if (i==0) {
-
-            cadastrarFuncionario(servidor);
-        }
-        getchar();
-    }
-
 };

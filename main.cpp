@@ -627,7 +627,7 @@ int main() {
                         opMenuFuncionario = 0;
                         break;
                     }
-                    case 4: { //DELETAR hospede
+                    case 4: { //DELETAR funcionario
                         funcionario f;
                         f.excluirFuncionario(servidor);
                         opMenuFuncionario = 0;
