@@ -64,7 +64,7 @@ void verificarEstruturaBD() {
     }
 
     //Criando a estrutura da tabela da suite
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, numero SMALLINT UNIQUE NOT NULL, ramal VARCHAR(20), vagas SMALLINT(2)  , status varchar(15) DEFAULT ('N'), preco DECIMAL(6,2))");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, numero SMALLINT UNIQUE NOT NULL, ramal VARCHAR(20), vagas SMALLINT(2)  , status varchar(15) DEFAULT ('disponivel'), preco DECIMAL(6,2))");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela SUITE Criada com Sucesso!\n";
     } else {
@@ -843,8 +843,11 @@ int main() {
                     case 1: { //Cadastrar Hóspede
                         hospedagem h;
                         suite s;
-                        if (s.verificarDisponibilidade(servidor)) {
+                        erroHospedagem = false;
+                        bool disponivel = s.verificarDisponibilidade(servidor);
+                        if (disponivel) {
                             h.cadastrarHospedagem(servidor);
+
                         } else {
                             erroHospedagem = true;
                         }

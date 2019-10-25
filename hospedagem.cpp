@@ -113,7 +113,7 @@ public:
                 cout << "Hospedagem cadastrada com sucesso.";
                 gotoxy(40,21);
                 cout << "Retornando ao menu de HOSPEDAGEM";
-                carregar();
+
             }
             getchar();
         } else {

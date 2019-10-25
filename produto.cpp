@@ -112,7 +112,7 @@ public:
                 gotoxy(40,20);
                 cout << "PRODUTO cadastrado com sucesso.";
                 gotoxy(40,21);
-                carregar();
+
             }
             getchar();
         } else {

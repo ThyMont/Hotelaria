@@ -104,7 +104,7 @@ public:
     void cadastrarSuiteBD(MYSQL *servidor, string numero, string ramal, string vagas, string preco ) {
         mysql_select_db(servidor,"hoteldb");
         if (mysql_errno(servidor)==0) {
-            string query = "INSERT INTO suite (numero, ramal, vagas, data_entrada, preço) VALUES('"+(numero)+"', '"+(ramal)+"', '"+(vagas)+"','"+(preco)+"');";
+            string query = "INSERT INTO suite (numero, ramal, vagas, preco) VALUES('"+(numero)+"', '"+(ramal)+"', '"+(vagas)+"','"+(preco)+"');";
             mysql_query(servidor,query.c_str());
 
             if (mysql_errno(servidor)==0) {
@@ -112,7 +112,6 @@ public:
                 gotoxy(40,20);
                 cout << "SUITE cadastrada com sucesso.";
                 gotoxy(40,21);
-                carregar();
             }
             getchar();
         } else {
