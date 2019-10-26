@@ -831,8 +831,6 @@ int main() {
                         hospedagem h;
                         suite s;
                         erroHospedagem = false;
-                        bool disponivel;
-                        disponivel = s.verificarDisponibilidade(servidor);
                         carregar();
                         if (s.verificarDisponibilidade(servidor)) {
                             h.cadastrarHospedagem(servidor);
@@ -905,17 +903,13 @@ int main() {
                     gotoxy(x,y++);
                     y++;
                     textcolor(14);
-                    cout << "    1 - CADASTRAR VENDA";
+                    cout << "    1 - REGISTRAR VENDA";
                     gotoxy(x,y++);
                     y++;
-                    cout << "    2 - LOCALIZAR VENDA POR HOSPEDE";
+                    cout << "    2 - CANCELAR VENDA";
                     gotoxy(x,y++);
                     y++;
-                    y++;
-                    cout << "    3 - ENCERRAR VENDA";
-                    gotoxy(x,y++);
-                    y++;
-                    cout << "    4 - VOLTAR AO MENU PRINCIPAL";
+                    cout << "    3 - VOLTAR AO MENU PRINCIPAL";
                     y++;
                     gotoxy(x,++y);
                     textcolor(1);
@@ -935,11 +929,9 @@ int main() {
                         venda v;
                         suite s;
                         erroVenda = false;
-                        bool disponivel;
-                        disponivel = s.verificarDisponibilidade(servidor);
                         carregar();
                         if (s.verificarDisponibilidade(servidor)) {
-                            v.cadastrarVenda(servidor);
+                            v.registrarVenda(servidor);
 
                         } else {
                             erroVenda = true;
@@ -948,19 +940,13 @@ int main() {
                         opMenuVenda = 0;
                         break;
                     }
-                    case 2: { //LOCALIZAR VENDA POR NOME DO HOSPEDE
-                        venda h;
-                        v.localizarPorNome(servidor);
+                    case 2: { //Encerrar Venda
+                        venda v;
+                        v.cancelarVenda(servidor);
                         opMenuVenda = 0;
                         break;
                     }
-                    case 3: { //Encerrar Venda
-                        venda h;
-                        v.encerrarVenda(servidor);
-                        opMenuVenda = 0;
-                        break;
-                    }
-                    case 4: {
+                    case 3: {
                         gotoxy(45,26);
                         textcolor(14);
                         cout << "Voltando ao menu principal";

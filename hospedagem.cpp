@@ -248,7 +248,7 @@ public:
             textcolor(3);
             gotoxy(35,3);
             textcolor(15);
-            cout << "- - - -    LOCALIZAR HOSPEDE POR NOME   - - - -";
+            cout << "- - - -    LOCALIZAR HOSPEDAGEM POR NOME   - - - -";
             gotoxy(35,8);
             textcolor(12);
             cout << "DIGITE O NOME DESEJADO: ";
