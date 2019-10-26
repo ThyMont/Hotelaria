@@ -6,6 +6,7 @@
 #include <string.h>
 
 
+
 using namespace std;
 
 
@@ -97,6 +98,11 @@ private:
             Sleep(50);
             printf("%c",219);
         }
+    }
+
+    void ocuparSuite(MYSQL *servidor, string id){
+        string query = "UPDATE suite SET ocupacao = 'ocupado' WHERE id = "+id+"';";
+        mysql_query(servidor,query.c_str());
     }
 
 public:
@@ -193,7 +199,7 @@ public:
     void localizarPorNomeBD(MYSQL *servidor, string nome) {
         mysql_select_db(servidor,"hoteldb");
         if (mysql_errno(servidor)==0) {
-            string query = "SELECT id, nome, cpf from hospede WHERE nome LIKE \'%%"+nome+"%%\';";
+            string query = "SELECT A.NOME, B.data_entrada , C.numero, C.preco FROM hospede AS A JOIN hospedagem AS B JOIN suite AS C ON A.id = B.id_hospede AND c.id = b.id_suite WHERE a.nome LIKE \'%%"+nome+"%%\';";
             mysql_query(servidor,query.c_str());
             gotoxy(40,11);
             textcolor(6);
@@ -204,7 +210,7 @@ public:
             }
 
             if (mysql_errno(servidor)==0) {
-                int x = 35, y = 14;
+                int x = 25, y = 14;
                 gotoxy(40,12);
                 textcolor(14);
                 cout << "Pesquisa realizada com sucesso!";
@@ -215,7 +221,7 @@ public:
                 textcolor(15);
                 while( ( row = mysql_fetch_row(res)) != NULL ) {
                     gotoxy(x,y++);
-                    cout << ++i<<". ID: "<<row[0] << " Nome: "<< row[1] <<"\t CPF: "<< row[2] << endl;
+                    cout << ++i<<". NOME: "<<row[0] << "  Data de Entrada: "<< row[1] <<"  Numero: "<< row[2] <<"  Preco: R$"<< row[2]<< endl;
                     Sleep(500);
                 }
                 y++;

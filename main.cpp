@@ -64,7 +64,7 @@ void verificarEstruturaBD() {
     }
 
     //Criando a estrutura da tabela da suite
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, numero SMALLINT UNIQUE NOT NULL, ramal VARCHAR(20), vagas SMALLINT(2)  , status varchar(15) DEFAULT ('disponivel'), preco DECIMAL(6,2))");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS suite (id int PRIMARY KEY AUTO_INCREMENT, numero SMALLINT UNIQUE NOT NULL, ramal VARCHAR(20), vagas SMALLINT(2)  , ocupacao varchar(15) DEFAULT ('disponivel'), preco DECIMAL(6,2))");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela SUITE Criada com Sucesso!\n";
     } else {
@@ -104,8 +104,8 @@ void verificarEstruturaBD() {
     }
 
     //criando a estrutura da tabela de vendas
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS vendas (id int PRIMARY KEY AUTO_INCREMENT, id_hospedagem int, id_funcionario int, data_venda date, status varchar(20), valor DECIMAL(6,2))");
-    mysql_query(servidor, "ALTER TABLE vendas ADD FOREIGN KEY (id_funcionario) REFERENCES funcionario(id);");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS vendas (id int PRIMARY KEY AUTO_INCREMENT, id_hospedagem int, id_produto int, data_venda date, status varchar(20), valor DECIMAL(6,2))");
+    mysql_query(servidor, "ALTER TABLE vendas ADD FOREIGN KEY (id_produto) REFERENCES produto(id);");
     mysql_query(servidor, "ALTER TABLE vendas ADD FOREIGN KEY (id_hospedagem) REFERENCES hospedagem(id);");
     if (mysql_errno(servidor)==0) {
         cout<< "Tabela SERVIÇO Criada com Sucesso!\n";
@@ -809,22 +809,11 @@ int main() {
                     cout << "    2 - LOCALIZAR HOSPEDAGEM POR HOSPEDE";
                     gotoxy(x,y++);
                     y++;
-                    cout << "    3 - LOCALIZAR HOSPEDAGEM POR CPF";
+                    y++;
+                    cout << "    3 - ENCERRAR HOSPEDAGEM";
                     gotoxy(x,y++);
                     y++;
-                    cout << "    4 - EDITAR INFORMACOES DE HOSPEDAGEM";
-                    gotoxy(x,y++);
-                    y++;
-                    cout << "    5 - DELETAR HOSPEDAGEM";
-                    gotoxy(x,y++);
-                    y++;
-                    cout << "    6 - IMPRIMIR QUANTIDADE DE HOSPEDAGEMS CADASTRADOS";
-                    gotoxy(x,y++);
-                    y++;
-                    cout << "    7 - LISTAR HOSPEDAGEMS POR UF";
-                    gotoxy(x,y++);
-                    y++;
-                    cout << "    8 - VOLTAR AO MENU PRINCIPAL";
+                    cout << "    4 - VOLTAR AO MENU PRINCIPAL";
                     y++;
                     gotoxy(x,++y);
                     textcolor(1);
@@ -844,8 +833,10 @@ int main() {
                         hospedagem h;
                         suite s;
                         erroHospedagem = false;
-                        bool disponivel = s.verificarDisponibilidade(servidor);
-                        if (disponivel) {
+                        bool disponivel;
+                        disponivel = s.verificarDisponibilidade(servidor);
+                        carregar();
+                        if (s.verificarDisponibilidade(servidor)) {
                             h.cadastrarHospedagem(servidor);
 
                         } else {
@@ -861,39 +852,13 @@ int main() {
                         opMenuHospedagem = 0;
                         break;
                     }
-                    case 3: { //LOCALIZAR HOSPEDAGEM POR CPF
+                    case 3: { //Encerrar Hospedagem
                         hospedagem h;
                         //h.localizarPorCPF(servidor);
                         opMenuHospedagem = 0;
                         break;
                     }
-                    case 4: { //EDITAR INFORMACOES DE HOSPEDAGEM
-                        hospedagem h;
-                        //h.editarHospedagem(servidor);
-                        opMenuHospedagem = 0;
-                        break;
-                    }
-                    case 5: { //DELETAR hospedagem
-                        hospedagem h;
-                        //h.excluirHospedagem(servidor);
-                        opMenuHospedagem = 0;
-                        break;
-                    }
-                    case 6: {
-                        hospedagem h;
-                        //h.contarhospedagems(servidor);
-                        getchar();
-                        opMenuHospedagem = 0;
-                        break;
-                    }
-                    case 7: { //Listar Hóspedes por UF
-                        hospedagem h;
-                        // h.listarporUF(servidor);
-                        getchar();
-                        opMenuHospedagem = 0;
-                        break;
-                    }
-                    case 8: {
+                    case 4: {
                         gotoxy(45,26);
                         textcolor(14);
                         cout << "Voltando ao menu principal";

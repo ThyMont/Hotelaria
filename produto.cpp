@@ -99,6 +99,7 @@ private:
         }
     }
 
+
 public:
     //
     void cadastrarProdutoBD(MYSQL *servidor, string descricao, string preco ) {

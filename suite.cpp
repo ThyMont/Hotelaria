@@ -646,7 +646,7 @@ public:
     bool verificarDisponibilidade(MYSQL *servidor) {
         int i = 0;
 
-        string query = "SELECT * from suite WHERE status LIKE '%disponivel%';";
+        string query = "SELECT * from suite WHERE ocupacao LIKE '%disponivel%';";
         mysql_query(servidor,query.c_str());
         MYSQL_RES* res = mysql_use_result(servidor);
         MYSQL_ROW row;
@@ -659,4 +659,6 @@ public:
             return false;
         }
     }
+
+
 };
