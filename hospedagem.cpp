@@ -100,7 +100,7 @@ private:
         }
     }
 
-    void ocuparSuite(MYSQL *servidor, string id){
+    void ocuparSuite(MYSQL *servidor, string id) {
         string query = "UPDATE suite SET ocupacao = 'ocupado' WHERE id = "+id+"';";
         mysql_query(servidor,query.c_str());
     }
@@ -261,4 +261,82 @@ public:
         } while(op!=1);
     }
 
+    void CalcularConta(MYSQL *servidor, string idHospedagem) {
+
+    }
+
+    void encerrarHospedagem(MYSQL *servidor) {
+
+        system("CLS");
+        margemTela();
+        gotoxy(4,0);
+        textcolor(3);
+        gotoxy(35,3);
+        textcolor(15);
+        cout << "- - - -    ENCERRAR HOSPEDAGEM   - - - -";
+        gotoxy(35,8);
+        textcolor(12);
+        cout << "DIGITE A ID DA HOSPEDAGEM A SER ENCERRADA: ";
+        textcolor(11);
+        gotoxy(35,10);
+        string id;
+        cin>>id;
+        mysql_select_db(servidor,"hoteldb");
+        if (mysql_errno(servidor)==0) {
+            string query = "SELECT A.NOME, SUM(B.valor) FROM `vendas` as B JOIN HOSPEDE AS A JOIN hospedagem AS C ON A.id = c.id_hospede AND c.id = b.id_hospedagem WHERE c.id  = "+idHospedagem+";";
+            mysql_query(servidor,query.c_str());
+            gotoxy(40,11);
+            textcolor(6);
+            cout << "Pesquisando";
+            for(int i = 1; i<5; i++) {
+                Sleep(500);
+                cout << ".";
+            }
+
+            if (mysql_errno(servidor)==0) {
+                int x = 25, y = 14;
+                gotoxy(40,12);
+                textcolor(14);
+                cout << "Pesquisa realizada com sucesso!";
+                Sleep(1);
+                MYSQL_RES* res = mysql_use_result(servidor);
+                MYSQL_ROW row;
+                int i = 0;
+                string soma;
+                textcolor(15);
+                while( ( row = mysql_fetch_row(res)) != NULL ) {
+                    gotoxy(x,y++);
+                    cout << ++i<<". NOME: "<<row[0] << "  Total: "<< row[1] << endl;
+                    soma = row[1];
+                    Sleep(500);
+                }
+                y++;
+                gotoxy(x,++y);
+                int op;
+                do {
+                    gotoxy(x,y+2);
+                    textcolor(5);
+                    cout << "DESEJA ENCERRAR A HOSPEDAGEM? 1 PARA SIM, 2 PARA NÃO ";
+                    cin >> op;
+                } while (op!=1&&op!=2);
+                if (op == 1) {
+                    string query = "UPDATE hospedagem set conta_final = "+ soma +" WHERE id = "+idHospedagem+";";
+                    mysql_query(servidor,query.c_str());
+
+                    query = "UPDATE vendas set pagamento = PAGO WHERE id = "+idHospedagem+";";
+                    mysql_query(servidor,query.c_str());
+                    gotoxy(x,y+3);
+                    cout << "Hospedagem Encerrada com sucesso";
+                    carregar();
+                } else {
+                    gotoxy(x,y+3);
+                    cout << "Operação cancelada";
+                    carregar();
+                }
+            }
+        } else {
+            cout<<"\nErro ao acessar o banco de dados "<< mysql_errno(servidor) << ", Mensagem: " << mysql_error(servidor)<<endl;
+            exit(1);
+        }
+    }
 };
