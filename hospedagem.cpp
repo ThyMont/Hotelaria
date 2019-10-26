@@ -283,7 +283,7 @@ public:
         cin>>id;
         mysql_select_db(servidor,"hoteldb");
         if (mysql_errno(servidor)==0) {
-            string query = "SELECT A.NOME, SUM(B.valor) FROM `vendas` as B JOIN HOSPEDE AS A JOIN hospedagem AS C ON A.id = c.id_hospede AND c.id = b.id_hospedagem WHERE c.id  = "+idHospedagem+";";
+            string query = "SELECT A.NOME, SUM(B.valor) FROM `vendas` as B JOIN HOSPEDE AS A JOIN hospedagem AS C ON A.id = c.id_hospede AND c.id = b.id_hospedagem WHERE c.id  = "+id+";";
             mysql_query(servidor,query.c_str());
             gotoxy(40,11);
             textcolor(6);
@@ -320,10 +320,10 @@ public:
                     cin >> op;
                 } while (op!=1&&op!=2);
                 if (op == 1) {
-                    string query = "UPDATE hospedagem set conta_final = "+ soma +" WHERE id = "+idHospedagem+";";
+                    string query = "UPDATE hospedagem set conta_final = "+ soma +" WHERE id = "+id+";";
                     mysql_query(servidor,query.c_str());
 
-                    query = "UPDATE vendas set pagamento = PAGO WHERE id = "+idHospedagem+";";
+                    query = "UPDATE vendas set pagamento = PAGO WHERE id = "+id+";";
                     mysql_query(servidor,query.c_str());
                     gotoxy(x,y+3);
                     cout << "Hospedagem Encerrada com sucesso";

@@ -307,16 +307,13 @@ int main() {
             cout << "    5 - HOSPEDAGEM";
             gotoxy(x,y++);
             y++;
-            cout << "    6 - RESERVA";
+            cout << "    6 - VENDA";
             gotoxy(x,y++);
             y++;
-            cout << "    7 - VENDA";
+            cout << "    7 - LOGOFF";
             gotoxy(x,y++);
             y++;
-            cout << "    8 - LOGOFF";
-            gotoxy(x,y++);
-            y++;
-            cout << "    9 - FECHAR PROGRAMA";
+            cout << "    8 - FECHAR PROGRAMA";
             y++;
             gotoxy(x,++y);
             textcolor(1);
@@ -560,7 +557,7 @@ int main() {
                         textcolor(14);
                         cout << "Opcao Invalida. Tente Novamente!";
                         erro = true;
-                        break;
+;
                         break;
                     }
                     }
@@ -700,7 +697,7 @@ int main() {
                     cout << "    2 - LOCALIZAR PRODUTO POR NUMERO";
                     gotoxy(x,y++);
                     y++;
-                    cout << "    3 - LISTAR PRODUTOS POR DESCRICAO";
+                    cout << "    3 - LISTAR PRODUTOS POR STATUS";
                     gotoxy(x,y++);
                     y++;
                     cout << "    4 - EDITAR INFORMACOES DE PRODUTO";
@@ -731,13 +728,13 @@ int main() {
                         opMenuProduto = 0;
                         break;
                     }
-                    case 2: { //LOCALIZAR Produto por Descricao
+                    case 2: { //LOCALIZAR Produto
                         produto s;
                         s.localizarPorDescricao(servidor);
                         opMenuProduto = 0;
                         break;
                     }
-                    case 3: { //Listar produtos por status
+                    case 3: { //Listar produtos
                         produto s;
                         s.listarPorDescricao(servidor);
                         opMenuProduto = 0;
@@ -749,7 +746,7 @@ int main() {
                         opMenuProduto = 0;
                         break;
                     }
-                    case 5: { //DELETAR hospede
+                    case 5: { //DELETAR produto
                         produto s;
                         s.excluirProduto(servidor);
                         opMenuProduto = 0;
@@ -768,7 +765,7 @@ int main() {
                         textcolor(14);
                         cout << "Opcao Invalida. Tente Novamente!";
                         erro = true;
-                        break;
+;
                         break;
                     }
                     }
@@ -854,7 +851,7 @@ int main() {
                     }
                     case 3: { //Encerrar Hospedagem
                         hospedagem h;
-                        //h.localizarPorCPF(servidor);
+                        h.encerrarHospedagem(servidor);
                         opMenuHospedagem = 0;
                         break;
                     }
@@ -882,7 +879,7 @@ int main() {
                 break;
 
             }
-            case 6: { // RESERVA
+            case 6: { // VENDAS
                 gotoxy(40,26);
                 cout << "                               ";
                 gotoxy(45,26);
@@ -891,16 +888,7 @@ int main() {
                 opMenu = 0;
                 break;
             }
-            case 7: { // PRODUTOS
-                gotoxy(40,26);
-                cout << "                               ";
-                gotoxy(45,26);
-                textcolor(14);
-                carregar();
-                opMenu = 0;
-                break;
-            }
-            case 8: {
+            case 7: {
                 gotoxy(40,26);
                 cout << "                               ";
                 gotoxy(45,26);
@@ -910,7 +898,7 @@ int main() {
                 loginCHK = false;
                 break;
             }
-            case 9: {
+            case 8: {
                 gotoxy(40,26);
                 cout << "                               ";
                 gotoxy(45,26);
@@ -929,7 +917,7 @@ int main() {
                 break;
             }
             }
-        } while (opMenu<1||opMenu>9);
+        } while (opMenu<1||opMenu>8);
 
     } while (!loginCHK);
     gotoxy(0,29);
