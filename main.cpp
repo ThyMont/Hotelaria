@@ -10,6 +10,7 @@
 #include "suite.cpp"
 #include "produto.cpp"
 #include "hospedagem.cpp"
+#include "venda.cpp"
 #include <mysql.h>
 
 using namespace std;
@@ -104,7 +105,7 @@ void verificarEstruturaBD() {
     }
 
     //criando a estrutura da tabela de vendas
-    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS vendas (id int PRIMARY KEY AUTO_INCREMENT, id_hospedagem int, id_produto int, data_venda date, status varchar(20), valor DECIMAL(6,2))");
+    mysql_query(servidor, "CREATE TABLE IF NOT EXISTS vendas (id int PRIMARY KEY AUTO_INCREMENT, id_hospedagem int, id_produto int, data_venda date, pagamento varchar(20), valor DECIMAL(6,2))");
     mysql_query(servidor, "ALTER TABLE vendas ADD FOREIGN KEY (id_produto) REFERENCES produto(id);");
     mysql_query(servidor, "ALTER TABLE vendas ADD FOREIGN KEY (id_hospedagem) REFERENCES hospedagem(id);");
     if (mysql_errno(servidor)==0) {
@@ -882,10 +883,104 @@ int main() {
             case 6: { // VENDAS
                 gotoxy(40,26);
                 cout << "                               ";
+                carregar();
                 gotoxy(45,26);
                 textcolor(14);
-                carregar();
-                opMenu = 0;
+
+                int opMenuVenda;
+                bool erroVenda  = false;
+
+                do {
+                    system("CLS");
+                    margemTela();
+                    gotoxy(4,0);
+                    textcolor(3);
+                    cout << "Usuario:  " << nomeUsuarioAtivo;
+                    int x = 40,y = 3;
+                    gotoxy(x,y++);
+                    textcolor(15);
+                    cout << "- - - -    MENU VENDA    - - - -";
+                    y++;
+                    y++;
+                    gotoxy(x,y++);
+                    y++;
+                    textcolor(14);
+                    cout << "    1 - CADASTRAR VENDA";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    2 - LOCALIZAR VENDA POR HOSPEDE";
+                    gotoxy(x,y++);
+                    y++;
+                    y++;
+                    cout << "    3 - ENCERRAR VENDA";
+                    gotoxy(x,y++);
+                    y++;
+                    cout << "    4 - VOLTAR AO MENU PRINCIPAL";
+                    y++;
+                    gotoxy(x,++y);
+                    textcolor(1);
+                    cout << "    Digite a opcao desejada: ";
+                    if (erroVenda) {
+                        gotoxy(30,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida ou nao ha suite disponivel. Tente Novamente!";
+                    }
+                    erroVenda = false;
+                    textcolor(1);
+                    gotoxy(x+29,y);
+                    cin >>opMenuVenda;
+
+                    switch (opMenuVenda) {
+                    case 1: { //Cadastrar Hóspede
+                        venda v;
+                        suite s;
+                        erroVenda = false;
+                        bool disponivel;
+                        disponivel = s.verificarDisponibilidade(servidor);
+                        carregar();
+                        if (s.verificarDisponibilidade(servidor)) {
+                            v.cadastrarVenda(servidor);
+
+                        } else {
+                            erroVenda = true;
+                        }
+
+                        opMenuVenda = 0;
+                        break;
+                    }
+                    case 2: { //LOCALIZAR VENDA POR NOME DO HOSPEDE
+                        venda h;
+                        v.localizarPorNome(servidor);
+                        opMenuVenda = 0;
+                        break;
+                    }
+                    case 3: { //Encerrar Venda
+                        venda h;
+                        v.encerrarVenda(servidor);
+                        opMenuVenda = 0;
+                        break;
+                    }
+                    case 4: {
+                        gotoxy(45,26);
+                        textcolor(14);
+                        cout << "Voltando ao menu principal";
+                        carregar();
+                        gotoxy(0,29);
+                        break;
+                    }
+                    default: {
+                        gotoxy(40,26);
+                        textcolor(14);
+                        cout << "Opcao Invalida. Tente Novamente!";
+                        erro = true;
+                        break;
+                        break;
+                    }
+                    }
+
+                } while (opMenuVenda < 1 || opMenuVenda >8);
+
+                opMenu = 0; //Voltar ao loop do menu principal
                 break;
             }
             case 7: {

@@ -42,6 +42,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="produto.cpp" />
 		<Unit filename="suite.cpp" />
+		<Unit filename="venda.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
