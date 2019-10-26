@@ -558,7 +558,7 @@ int main() {
                         textcolor(14);
                         cout << "Opcao Invalida. Tente Novamente!";
                         erro = true;
-;
+                        ;
                         break;
                     }
                     }
@@ -766,7 +766,7 @@ int main() {
                         textcolor(14);
                         cout << "Opcao Invalida. Tente Novamente!";
                         erro = true;
-;
+                        ;
                         break;
                     }
                     }

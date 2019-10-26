@@ -197,7 +197,7 @@ public:
         } while ((confirmarCadastro<1 && confirmarCadastro > 3)||confirmarCadastro == 2);
     }
 
-        void cancelarVenda(MYSQL *servidor) {
+    void cancelarVenda(MYSQL *servidor) {
 
         system("CLS");
         margemTela();

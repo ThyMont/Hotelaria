@@ -86,16 +86,16 @@ private:
         desenharRetangulo(119,29);
     }
 
-    void carregar (){
-    textcolor(4);
-    desenharRetangulo2(35,3,40,13);
-    gotoxy(41,14);
-    textcolor(1);
-    for (int i = 0; i<33; i++) {
+    void carregar () {
+        textcolor(4);
+        desenharRetangulo2(35,3,40,13);
+        gotoxy(41,14);
+        textcolor(1);
+        for (int i = 0; i<33; i++) {
             Sleep(50);
             printf("%c",219);
         }
-}
+    }
 
 public:
     bool fazerLogin (MYSQL *servidor, string login, string senha) {
